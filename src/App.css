@@ -1,0 +1,19 @@
+body{
+    padding: 10px;
+    background-color: aquamarine;
+}
+
+.line {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.line > div{
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+.line:first-child{
+    margin-left: 0px;
+}
