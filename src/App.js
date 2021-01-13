@@ -1,10 +1,12 @@
+import { Route, BrowserRouter as Router } from 'react-router-dom';
 import TestComp from './components/TestComp';
+import HomePage from './pages/HomePage';
 
 function App() {
   return (
-    <div>
-      <TestComp>Kahlon</TestComp>
-    </div>
+    <Router>
+      <Route exact path="/" component={HomePage} />
+    </Router>
   );
 }
 
