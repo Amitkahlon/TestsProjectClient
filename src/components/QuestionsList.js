@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Table, TableBody } from 'semantic-ui-react'
-// import { Link } from 'react-router-dom';
+import { Table, TableBody, Button, Icon, Tab } from 'semantic-ui-react'
+import { Link } from 'react-router-dom';
 import ServerAccess from "../api/ServerAccess";
 import QuestionItem from "../components/QuestionItem";
 
 const QuestionsList = () => {
     const [questions, setQuestions] = useState([]);
 
-    // functions which is called only once when the component is mounting
     useEffect(() => {
+        // Anything in here is fired on component mount.
         document.title = `Manage Questions`;
         getQuestions()
+
+        return () => {
+            // Anything in here is fired on component unmount.
+            document.title = `Tests Manager`;
+        }
+
     }, []);
 
     const getQuestions = () => {
@@ -32,6 +38,7 @@ const QuestionsList = () => {
                     <Table.HeaderCell>Display</Table.HeaderCell>
                     <Table.HeaderCell>Tags</Table.HeaderCell>
                     <Table.HeaderCell>Answers</Table.HeaderCell>
+                    <Table.HeaderCell width="3"></Table.HeaderCell>
                 </Table.Row>
             </Table.Header>
 
@@ -42,6 +49,22 @@ const QuestionsList = () => {
                     )
                 }
             </TableBody>
+
+            <Table.Footer fullWidth>
+                <Table.Row>
+                    <Table.HeaderCell />
+                    <Table.HeaderCell />
+                    <Table.HeaderCell />
+                    <Table.HeaderCell colSpan='4'>
+                        <Link to="/addQuestion">
+                            <Button floated='right' icon labelPosition='left' primary size='small' >
+                                <Icon name='plus' />
+                            Add Question
+                        </Button>
+                        </Link>
+                    </Table.HeaderCell>
+                </Table.Row>
+            </Table.Footer>
         </Table>
     );
 }

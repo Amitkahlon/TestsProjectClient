@@ -1,5 +1,5 @@
 import React from "react";
-import { Table } from 'semantic-ui-react'
+import { Table, Button, Icon } from 'semantic-ui-react'
 
 const QuestionItem = ({ item }) => {
   return (
@@ -10,6 +10,20 @@ const QuestionItem = ({ item }) => {
       <Table.Cell>{item.answersDisplay}</Table.Cell>
       <Table.Cell>{item.tags}</Table.Cell>
       <Table.Cell>{item.answers.length}</Table.Cell>
+      <Table.Cell>
+        <Button size="tiny" color="blue">
+          <Icon name='bars' />
+          View
+          </Button>
+        <Button size="tiny" color="black">
+          <Icon name='edit' />
+          Edit
+          </Button>
+        <Button size="tiny" color="red">
+          <Icon name='delete' />
+          Delete
+          </Button>
+      </Table.Cell>
     </Table.Row>
   )
 }
