@@ -7,7 +7,7 @@ const Navbar = () => {
         <Menu stackable>
             <Link to='/'>
                 <Menu.Item as="a">
-                    <div className="line">
+                    <div className="line logo">
                         <i className="fas fa-flask"></i>
                         <div>Testim</div>
                     </div>
@@ -18,7 +18,7 @@ const Navbar = () => {
                     Home
                 </Menu.Item>
             </Link>
-            <Link to='/admin'>
+            <Link to='/login'>
                 <Menu.Item>
                     Login
                 </Menu.Item>

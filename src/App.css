@@ -9,6 +9,10 @@ body{
     align-items: center;
 }
 
+.logo {
+    color: teal;
+}
+
 .line > div{
     margin-left: 5px;
     font-weight: bold;
