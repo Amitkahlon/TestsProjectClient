@@ -23,9 +23,17 @@ const QuestionsList = () => {
         ServerAccess.get('/api/questions')
             .then(({ data }) => {
                 setQuestions(data)
-                console.log(data);
             })
             .catch(err => console.log(err))
+    }
+
+    const deleteAction = (id) => {
+        ServerAccess.delete('/api/questions/' + id.toString())
+            .then((res) => {
+                setQuestions(questions.filter(item => item._id !== id))
+            })
+            .catch((err) => console.error(err));
+
     }
 
     return (
@@ -45,7 +53,7 @@ const QuestionsList = () => {
             <TableBody>
                 {
                     questions.map(question =>
-                        <QuestionItem item={question} key={question._id} />
+                        <QuestionItem item={question} key={question._id} deleteAction={deleteAction} />
                     )
                 }
             </TableBody>
