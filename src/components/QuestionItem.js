@@ -1,7 +1,10 @@
 import React from "react";
 import { Table, Button, Icon } from 'semantic-ui-react'
 
-const QuestionItem = ({ item }) => {
+const QuestionItem = ({ item, deleteAction }) => {
+
+
+  
   return (
     <Table.Row>
       <Table.Cell>{item.title}</Table.Cell>
@@ -19,7 +22,7 @@ const QuestionItem = ({ item }) => {
           <Icon name='edit' />
           Edit
           </Button>
-        <Button size="tiny" color="red">
+        <Button size="tiny" color="red" onClick={() => deleteAction(item._id)}>
           <Icon name='delete' />
           Delete
           </Button>

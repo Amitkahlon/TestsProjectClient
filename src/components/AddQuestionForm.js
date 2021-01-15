@@ -11,6 +11,7 @@ import {
     TextArea,
     Icon
 } from 'semantic-ui-react'
+import ServerAccess from "../api/ServerAccess";
 import AnswerForm from "./AnswerForm";
 import QuestionTagInput from './QuestionTagInput';
 
@@ -29,7 +30,7 @@ const AddQuestionForm = () => {
     const [tags, setTags] = useState([{ id: 'Question', text: 'Question' }, { id: 'Hard', text: 'Hard' }]);
 
     const addAnswerForm = () => {
-        let newAnswer = { answer: "answer", correct: false }
+        let newAnswer = { answer: "", correct: false }
         setAnswers([...answers, newAnswer]);
     }
 
@@ -39,17 +40,19 @@ const AddQuestionForm = () => {
         setAnswers(newArray);
     }
 
-    const submitQuestion = () => {
+    const submitQuestion = async () => {
         const question = {
             title: title,
             subTitle: subTitle,
             questionType: questionType,
             tags: [...tags],
-            answers: [...answers],
+            // answers: [...answers],
             answersDisplay: answersDisplay
         }
 
-        console.log(question);
+        ServerAccess.post("api/questions", { question })
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
     }
 
     return (
@@ -69,7 +72,6 @@ const AddQuestionForm = () => {
                 onChange={(e, { value }) => setSubTitle(value)}
             />
             <Form.Dropdown width="10"
-                // name="subject"
                 value={questionType}
                 onChange={(e, { value }) => setQuestionType(value)}
                 control={Dropdown}
@@ -78,9 +80,8 @@ const AddQuestionForm = () => {
                 placeholder="Question Type"
             />
 
-            <Form.Field>
-                Selected value:
-            </Form.Field>
+            <Form.Field label='Answer View' />
+
             <Form.Field>
                 <Radio
                     label='Vertical'
@@ -109,7 +110,9 @@ const AddQuestionForm = () => {
             }
 
 
-            <Button floated="right" primary onClick={addAnswerForm}>
+
+
+            <Button primary onClick={addAnswerForm}>
                 <Icon name='plus' />
                     Add an answer
             </Button>
