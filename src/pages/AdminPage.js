@@ -5,8 +5,7 @@ import { Button, Container, Divider, Grid, Header } from 'semantic-ui-react';
 import { ContextValues } from '../context/AppContext';
 import '../styles/AdminPage.css';
 
-const AdminPage = (props) => {
-    const {token} = useContext(ContextValues)
+const AdminPage = () => {
     return (
         <div className="adminpage">
             <Header textAlign="center">Admin Page:</Header>

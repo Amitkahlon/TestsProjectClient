@@ -21,11 +21,7 @@ const Navbar = () => {
                     Home
                 </Menu.Item>
             </Link>
-<<<<<<< Updated upstream
-            <Link to='/login'>
-=======
             <Link to={token !== null? '/admin' : '/login'}>
->>>>>>> Stashed changes
                 <Menu.Item>
                     {token !== null? 'Admin' : 'Login'}
                 </Menu.Item>
