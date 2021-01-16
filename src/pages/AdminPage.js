@@ -1,9 +1,12 @@
 import React from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Container, Divider, Grid, Header } from 'semantic-ui-react';
+import { ContextValues } from '../context/AppContext';
 import '../styles/AdminPage.css';
 
-const AdminPage = () => {
+const AdminPage = (props) => {
+    const {token} = useContext(ContextValues)
     return (
         <div className="adminpage">
             <Header textAlign="center">Admin Page:</Header>
