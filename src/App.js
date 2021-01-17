@@ -7,7 +7,6 @@ import AddQuestionPage from './pages/AddQuestionPage';
 import LoginPage from './pages/LoginPage';
 import React, { useEffect, useContext } from 'react';
 import { ContextValues } from './context/AppContext';
-
 function App() {
   const {token, setToken} = useContext(ContextValues)
   useEffect(() => {
@@ -18,7 +17,7 @@ function App() {
   })
   return (
     <Router>
-      <Navbar/>
+      <Navbar />
       <Route exact path="/" component={HomePage} />
       <Route exact path="/login" component={LoginPage} />
       <Route exact path="/questions" component={QuestionPage} />
