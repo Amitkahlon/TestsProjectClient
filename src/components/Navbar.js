@@ -1,13 +1,16 @@
 import React from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
+import { ContextValues } from '../context/AppContext';
 
 const Navbar = () => {
+    const {token} = useContext(ContextValues)
     return (
         <Menu stackable>
             <Link to='/'>
                 <Menu.Item as="a">
-                    <div className="line">
+                    <div className="line logo">
                         <i className="fas fa-flask"></i>
                         <div>Testim</div>
                     </div>
@@ -18,9 +21,9 @@ const Navbar = () => {
                     Home
                 </Menu.Item>
             </Link>
-            <Link to='/admin'>
+            <Link to={token !== null? '/admin' : '/login'}>
                 <Menu.Item>
-                    Login
+                    {token !== null? 'Admin' : 'Login'}
                 </Menu.Item>
             </Link>
         </Menu>

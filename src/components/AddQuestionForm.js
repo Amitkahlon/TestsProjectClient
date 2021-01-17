@@ -14,13 +14,13 @@ import {
 import ServerAccess from "../api/ServerAccess";
 import AnswerForm from "./AnswerForm";
 import QuestionTagInput from './QuestionTagInput';
-
+ 
 const questionTypeOptions = [
     { key: 1, text: 'Single Answer', value: 1 },
     { key: 2, text: 'Multi Answer', value: 2 },
 ]
-
-
+ 
+ 
 const AddQuestionForm = () => {
     const [answers, setAnswers] = useState([]);
     const [title, setTitle] = useState("");
@@ -28,18 +28,18 @@ const AddQuestionForm = () => {
     const [questionType, setQuestionType] = useState("");
     const [answersDisplay, setAnswersDisplay] = useState("");
     const [tags, setTags] = useState([{ id: 'Question', text: 'Question' }, { id: 'Hard', text: 'Hard' }]);
-
+ 
     const addAnswerForm = () => {
         let newAnswer = { answer: "", correct: false }
         setAnswers([...answers, newAnswer]);
     }
-
+ 
     const removeAnswer = (index) => {
         let newArray = [...answers]
         newArray.splice(index, 1);
         setAnswers(newArray);
     }
-
+ 
     const submitQuestion = async () => {
         const question = {
             title: title,
@@ -49,12 +49,12 @@ const AddQuestionForm = () => {
             // answers: [...answers],
             answersDisplay: answersDisplay
         }
-
+ 
         ServerAccess.post("api/questions", { question })
             .then(res => console.log(res))
             .catch(err => console.log(err))
     }
-
+ 
     return (
         <Form>
             <Form.Field
@@ -79,9 +79,9 @@ const AddQuestionForm = () => {
                 selection
                 placeholder="Question Type"
             />
-
+ 
             <Form.Field label='Answer View' />
-
+ 
             <Form.Field>
                 <Radio
                     label='Vertical'
@@ -100,28 +100,28 @@ const AddQuestionForm = () => {
                     onChange={(e, { value }) => setAnswersDisplay(value)}
                 />
             </Form.Field>
-
+ 
             <Divider />
-
+ 
             {
                 answers.map((answerItem, i) =>
                     <AnswerForm answerItem={answerItem} index={i} key={i} removeAnswer={removeAnswer} />
                 )
             }
-
-
-
-
+ 
+ 
+ 
+ 
             <Button primary onClick={addAnswerForm}>
                 <Icon name='plus' />
                     Add an answer
             </Button>
-
+ 
             <QuestionTagInput tags={tags} setTags={setTags} />
-
+ 
             <Form.Button content='Add Question' primary onClick={submitQuestion} />
         </Form>
     )
 }
-
+ 
 export default AddQuestionForm;
