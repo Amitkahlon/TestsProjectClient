@@ -71,7 +71,7 @@ const LoginPage = (props) => {
                 </Form>
                 <Message>
                     New to us? Contact with Roee or Amit.
-            </Message>
+                </Message>
             </Grid.Column>
         </Grid>
     )

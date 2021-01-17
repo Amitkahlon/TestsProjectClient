@@ -1,9 +1,5 @@
 import React from 'react';
-<<<<<<< Updated upstream
 import { Container } from 'semantic-ui-react'
-=======
-import { Container, Grid, Menu } from 'semantic-ui-react'
->>>>>>> Stashed changes
 import AddQuestionForm from "../components/AddQuestionForm";
 
 const AddQuestionPage = () => {
