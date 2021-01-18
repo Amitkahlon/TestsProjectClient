@@ -1,8 +1,6 @@
 import React from 'react';
-import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Container, Divider, Grid, Header } from 'semantic-ui-react';
-import { ContextValues } from '../context/AppContext';
 import '../styles/AdminPage.css';
 
 const AdminPage = () => {

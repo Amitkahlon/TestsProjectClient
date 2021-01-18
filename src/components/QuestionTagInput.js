@@ -1,5 +1,4 @@
-import React, { Component, useState } from 'react';
-import { render } from 'react-dom';
+import React from 'react';
 import '../styles/questionTagInputStyle.css';
 import { WithContext as ReactTags } from 'react-tag-input';
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Table, TableBody, Button, Icon, Tab } from 'semantic-ui-react'
+import { Table, TableBody, Button, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
-import ServerAccess from "../api/ServerAccess";
+import serverAccess from "../api/serverAccess";
 import QuestionItem from "../components/QuestionItem";
 
 const QuestionsList = () => {
@@ -20,7 +20,7 @@ const QuestionsList = () => {
     }, []);
 
     const getQuestions = () => {
-        ServerAccess.get('/api/questions')
+        serverAccess.get('/api/questions')
             .then(({ data }) => {
                 setQuestions(data)
             })
@@ -28,7 +28,7 @@ const QuestionsList = () => {
     }
 
     const deleteAction = (id) => {
-        ServerAccess.delete('/api/questions/' + id.toString())
+        serverAccess.delete('/api/questions/' + id.toString())
             .then((res) => {
                 setQuestions(questions.filter(item => item._id !== id))
             })

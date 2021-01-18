@@ -1,16 +1,8 @@
 import React, { useState } from "react";
 import {
     Button,
-    Checkbox,
-    Divider,
-    Dropdown,
     Form,
-    Input,
-    Radio,
-    Select,
-    TextArea,
     Icon,
-    FormGroup,
     Label,
 } from 'semantic-ui-react'
 
