@@ -7,10 +7,7 @@ import AddQuestionPage from './pages/AddQuestionPage';
 import LoginPage from './pages/LoginPage';
 import React, { useEffect, useContext } from 'react';
 import { ContextValues } from './context/AppContext';
-<<<<<<< Updated upstream
-=======
 import serverAccess from './api/serverAccess';
->>>>>>> Stashed changes
 
 function App() {
   const { token, setToken, setAdmin } = useContext(ContextValues)
@@ -23,7 +20,7 @@ function App() {
   }, [])
   return (
     <Router>
-      <Navbar/>
+      <Navbar />
       <Route exact path="/" component={HomePage} />
       <Route exact path="/login" component={LoginPage} />
       <Route exact path="/questions"
