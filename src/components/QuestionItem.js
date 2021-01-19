@@ -1,8 +1,9 @@
 import React from "react";
 import { Table, Button, Icon } from 'semantic-ui-react'
+import DeleteModal from "../components/DeleteModal";
 
 const QuestionItem = ({ item, deleteAction }) => {
-  
+
   return (
     <Table.Row>
       <Table.Cell>{item.title}</Table.Cell>
@@ -10,7 +11,7 @@ const QuestionItem = ({ item, deleteAction }) => {
       <Table.Cell>{item.questionType}</Table.Cell>
       <Table.Cell>{item.answersDisplay}</Table.Cell>
       <Table.Cell>{item.tags}</Table.Cell>
-      <Table.Cell>{item.answers.length}</Table.Cell>
+      <Table.Cell>{item.correctAnswers.length + item.incorrectAnswers.length}</Table.Cell>
       <Table.Cell>
         <Button size="tiny" color="blue">
           <Icon name='bars' />
@@ -20,10 +21,13 @@ const QuestionItem = ({ item, deleteAction }) => {
           <Icon name='edit' />
           Edit
           </Button>
-        <Button size="tiny" color="red" onClick={() => deleteAction(item._id)}>
-          <Icon name='delete' />
+        <DeleteModal
+          deleteHandler={() => deleteAction(item._id)}
+          trigger={<Button size="tiny" color="red">
+            <Icon name='delete' />
           Delete
-          </Button>
+          </Button>} />
+        {/*  */}
       </Table.Cell>
     </Table.Row>
   )

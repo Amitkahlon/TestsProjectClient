@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useReducer, useState } from "react";
 import {
     Button,
     Checkbox,
@@ -14,50 +14,43 @@ import {
 import serverAccess from "../api/serverAccess";
 import AnswerForm from "./AnswerForm";
 import QuestionTagInput from './QuestionTagInput';
+import questionReducer from '../reducers/addQuestionReducer'
+
 
 const questionTypeOptions = [
-    { key: 1, text: 'Single Answer', value: 1 },
-    { key: 2, text: 'Multi Answer', value: 2 },
+    { key: 1, text: 'Single Answer', value: "SingleChoiceQuestion" },
+    { key: 2, text: 'Multi Answer', value: "MultipleSelectionQuestion" },
 ]
 
+const initialState = {
+    title: "",
+    subTitle: "",
+    questionType: "",
+    answers: [{ id: 0, text: "", isCorrect: false }],
+    answersDisplay: "vertical",
+    tags: [{ id: 'Question', text: 'Question' }, { id: 'Hard', text: 'Hard' }],
+    answersIdCounter: 1
+}
 
 
 
 const AddQuestionForm = () => {
-
-    const [answers, setAnswers] = useState([]);
-    const [title, setTitle] = useState("");
-    const [subTitle, setSubTitle] = useState("");
-    const [questionType, setQuestionType] = useState("");
-    const [answersDisplay, setAnswersDisplay] = useState("");
-    const [tags, setTags] = useState([{ id: 'Question', text: 'Question' }, { id: 'Hard', text: 'Hard' }]);
-
-    const addAnswerForm = () => {
-        let newAnswer = { answer: "", correct: false }
-        setAnswers([...answers, newAnswer]);
-    }
+    const [question, dispatch] = useReducer(questionReducer, initialState)
 
     const submitQuestion = async () => {
-        const question = {
-            title: title,
-            subTitle: subTitle,
-            questionType: questionType,
-            tags: [...tags],
-            // answers: [...answers],
-            answersDisplay: answersDisplay
-        }
+        let submitQuestion = { ...question }
+        submitQuestion.correctAnswers = question.answers.filter(answer => answer.isCorrect).map(answer => answer.text);
+        submitQuestion.incorrectAnswers = question.answers.filter(answer => !answer.isCorrect).map(answer => answer.text);
+        submitQuestion.tags = question.tags.map(tag => tag.text)
 
-        serverAccess.post("api/questions", { question })
+        delete submitQuestion.answers;
+        delete submitQuestion.answersIdCounter;
+
+        console.log(submitQuestion);
+
+        serverAccess.post("api/questions", { question: submitQuestion })
             .then(res => console.log(res))
             .catch(err => console.log(err))
-    }
-
-
-
-    const removeAnswer = (index) => {
-        let newArray = [...answers]
-        newArray.splice(index, 1);
-        setAnswers(newArray);
     }
 
     return (
@@ -66,23 +59,24 @@ const AddQuestionForm = () => {
                 control={TextArea}
                 label='Question Text'
                 placeholder='Enter question text...'
-                value={title}
-                onChange={(e, { value }) => setTitle(value)}
+                value={question.title}
+                onChange={(e, { value }) => dispatch({ type: "SET_TITLE", payload: value })}
+
             />
             <Form.Field
                 control={TextArea}
                 label='Question Sub Text'
                 placeholder='Enter question sub text...'
-                value={subTitle}
-                onChange={(e, { value }) => setSubTitle(value)}
+                value={question.subTitle}
+                onChange={(e, { value }) => dispatch({ type: "SET_SUBTITLE", payload: value })}
             />
             <Form.Dropdown width="10"
-                value={questionType}
-                onChange={(e, { value }) => setQuestionType(value)}
                 control={Dropdown}
                 options={questionTypeOptions}
                 selection
                 placeholder="Question Type"
+                value={question.questionType}
+                onChange={(e, { value }) => dispatch({ type: "SET_QUESTIONTYPE", payload: value })}
             />
 
             <Form.Field label='Answer View' />
@@ -92,8 +86,8 @@ const AddQuestionForm = () => {
                     label='Vertical'
                     name='radioGroup'
                     value='vertical'
-                    checked={answersDisplay === 'vertical'}
-                    onChange={(e, { value }) => setAnswersDisplay(value)}
+                    checked={question.answersDisplay === 'vertical'}
+                    onChange={(e, { value }) => dispatch({ type: "SET_ANSWERDISPLAY", payload: value })}
                 />
             </Form.Field>
             <Form.Field>
@@ -101,24 +95,26 @@ const AddQuestionForm = () => {
                     label='Horizontal'
                     name='radioGroup'
                     value='horizontal'
-                    checked={answersDisplay === 'horizontal'}
-                    onChange={(e, { value }) => setAnswersDisplay(value)}
+                    checked={question.answersDisplay === 'horizontal'}
+                    onChange={(e, { value }) => dispatch({ type: "SET_ANSWERDISPLAY", payload: value })}
                 />
             </Form.Field>
 
             <Divider />
 
             {
-                answers.map((answerItem, i) =>
-                    <AnswerForm answerItem={answerItem} index={i} key={i} removeAnswer={removeAnswer} />
+                question.answers.map((answerItem, i) =>
+                    <AnswerForm answerItem={answerItem} key={answerItem.id} index={i} removeAnswer={(id) => dispatch({ type: "REMOVE_ANSWER", payload: id })}
+                        setText={(text) => dispatch({ type: "SET_ANSWER_TEXT", payload: { text, id: answerItem.id } })}
+                        setIsCorrect={(isCorrect) => dispatch({ type: "SET_ANSWER_ISCORRECT", payload: { isCorrect, id: answerItem.id } })} />
                 )
             }
-            <Button floated="right" primary onClick={addAnswerForm}>
+            <Button primary onClick={() => dispatch({ type: "ADD_QUESTION" })}>
                 <Icon name='plus' />
                     Add an answer
             </Button>
 
-            <QuestionTagInput tags={tags} setTags={setTags} />
+            <QuestionTagInput tags={question.tags} setTags={(payload) => dispatch({ type: "SET_TAGS", payload })} />
 
             <Form.Button content='Add Question' primary onClick={submitQuestion} />
 

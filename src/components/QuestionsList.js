@@ -22,18 +22,20 @@ const QuestionsList = () => {
     const getQuestions = () => {
         serverAccess.get('/api/questions')
             .then(({ data }) => {
-                setQuestions(data)
+                console.log(data);
+                if (data) {
+                    setQuestions(data.questions)
+                }
             })
             .catch(err => console.log(err))
     }
 
     const deleteAction = (id) => {
-        serverAccess.delete('/api/questions/' + id.toString())
+        serverAccess.delete('/api/questions/' + id)
             .then((res) => {
                 setQuestions(questions.filter(item => item._id !== id))
             })
             .catch((err) => console.error(err));
-
     }
 
     return (
