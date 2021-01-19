@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
     Button,
     Form,
@@ -6,27 +6,24 @@ import {
     Label,
 } from 'semantic-ui-react'
 
-const AnswerForm = ({ answerItem, index, removeAnswer }) => {
-    const [correct, setCorrect] = useState(answerItem.correct);
-    const [answer, setAnswer] = useState(answerItem.answer);
-
+const AnswerForm = ({ answerItem, index, removeAnswer, setText, setIsCorrect }) => {
     return (
         <Form.Group>
             <Label>{index}</Label>
             <Form.Input
                 placeholder='Enter Answer text...'
                 content="dsad"
-                value={answer} 
-                onChange={(e, { value }) => setAnswer(value)}
+                value={answerItem.text} 
+                onChange={(e, { value }) => setText(value)}
             />
 
             <Form.Checkbox
                 label="Correct"
-                onChange={() => setCorrect(!correct)}
-                checked={correct}
+                onChange={() => setIsCorrect(!answerItem.isCorrect) }
+                checked={answerItem.isCorrect}
             />
 
-            <Button size="mini" color="red" onClick={() => removeAnswer(index)}>
+            <Button size="mini" color="red" onClick={() => removeAnswer(answerItem.id)}>
                 <Icon name='delete' size="large" />
                 Remove
           </Button>
