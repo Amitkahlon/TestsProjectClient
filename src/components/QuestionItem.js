@@ -2,8 +2,6 @@ import React from "react";
 import { Table, Button, Icon } from 'semantic-ui-react'
 
 const QuestionItem = ({ item, deleteAction }) => {
-
-
   
   return (
     <Table.Row>

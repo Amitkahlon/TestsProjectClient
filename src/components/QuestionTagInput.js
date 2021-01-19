@@ -2,6 +2,7 @@ import React from 'react';
 import '../styles/questionTagInputStyle.css';
 import { WithContext as ReactTags } from 'react-tag-input';
 
+
 const suggestions =
     [
         { id: "1", text: "question" },
@@ -50,7 +51,7 @@ const QuestionTagInput = ({ tags, setTags }) => {
         newTags.splice(currPos, 1);
         newTags.splice(newPos, 0, tag);
 
-        // // re-render
+        // re-render
         setTags(newTags);
     }
 
