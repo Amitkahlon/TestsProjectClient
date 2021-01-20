@@ -51,7 +51,6 @@ function App() {
         render={() => {
           if (!token) return <Redirect to='/login' />
           return <QuestionPage />
-        }} />
         }}
       />
       <Route exact path="/tests"
