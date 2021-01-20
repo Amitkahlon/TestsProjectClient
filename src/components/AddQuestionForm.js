@@ -1,13 +1,10 @@
-import React, { useContext, useReducer, useState } from "react";
+import React, { useReducer } from "react";
 import {
     Button,
-    Checkbox,
     Divider,
     Dropdown,
     Form,
-    Input,
     Radio,
-    Select,
     TextArea,
     Icon
 } from 'semantic-ui-react'

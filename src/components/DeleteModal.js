@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Button, Grid, Label, Modal, Segment } from 'semantic-ui-react'
+import { Button, Modal } from 'semantic-ui-react'
 
-const DeleteModal = ({ trigger, deleteHandler }) => {
+const DeleteModal = ({ trigger, deleteHandler, header, message }) => {
 
     const [open, setOpen] = useState(false)
 
@@ -12,16 +12,16 @@ const DeleteModal = ({ trigger, deleteHandler }) => {
             open={open}
             trigger={trigger}>
 
-            <Modal.Header>Delete Question</Modal.Header>
+            <Modal.Header>{header}</Modal.Header>
             <Modal.Content>
-                <p>Are you sure you want to delete this question</p>
+                <p>{message}</p>
             </Modal.Content>
 
             <Modal.Actions>
                 <Button negative
-                    onClick={(e) => setOpen(false)} >No</Button>
+                    onClick={() => setOpen(false)} >No</Button>
                 <Button positive
-                    onClick={(e) => {
+                    onClick={() => {
                         deleteHandler()
                         setOpen(false)
                     }}>
