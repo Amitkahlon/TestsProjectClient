@@ -6,7 +6,7 @@ import serverAccess from '../api/serverAccess'
 import { ContextValues } from '../context/AppContext'
 
 const LoginPage = (props) => {
-    const { setToken } = useContext(ContextValues)
+    const { setToken, setAdmin } = useContext(ContextValues)
     const [foundUser, setFoundUser] = useState(null)
     const [organization, setOrganization] = useState(null)
     const [user, setUser] = useState({
@@ -24,6 +24,7 @@ const LoginPage = (props) => {
                     localStorage.setItem('token', res.data.token)
                     setToken(res.data.token)
                     serverAccess.defaults.headers.common['x-auth-token'] = res.data.token;
+                    serverAccess.get('/api/users/me').then(res => setAdmin(res.data.admin)).catch(err => console.log(err))
                     props.history.push('/admin')
                 } else {
                     if(res.data.user){
