@@ -1,9 +1,14 @@
+<<<<<<< Updated upstream
 import React, { useState } from "react";
+=======
+import React, { useReducer } from "react";
+>>>>>>> Stashed changes
 import {
     Button,
     Divider,
     Dropdown,
     Form,
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
     TextArea,
     Icon
@@ -14,6 +19,8 @@ const questionType = [
     { key: 1, text: 'Single Answer', value: 1 },
     { key: 2, text: 'Multi Answer', value: 2 },
 =======
+=======
+>>>>>>> Stashed changes
     Radio,
     TextArea,
     Icon
@@ -28,6 +35,18 @@ const questionTypeOptions = [
 >>>>>>> Stashed changes
 ]
 
+<<<<<<< Updated upstream
+=======
+const initialState = {
+    title: "",
+    subTitle: "",
+    questionType: "",
+    answers: [{ id: 0, text: "", isCorrect: false }],
+    answersDisplay: "vertical",
+    tags: [{ id: 'Question', text: 'Question' }, { id: 'Hard', text: 'Hard' }],
+    answersIdCounter: 1
+}
+>>>>>>> Stashed changes
 
 const AddQuestionForm = () => {
 

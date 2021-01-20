@@ -10,6 +10,11 @@ import { ContextValues } from './context/AppContext';
 <<<<<<< Updated upstream
 =======
 import serverAccess from './api/serverAccess';
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+import TestsPage from './pages/TestsPage';
+import AddTestPage from './pages/AddTestPage';
 >>>>>>> Stashed changes
 
 function App() {
@@ -20,12 +25,18 @@ function App() {
       serverAccess.defaults.headers.common['x-auth-token'] = localStorage.getItem('token');
       serverAccess.get('/api/users/me').then(res => setAdmin(res.data.admin)).catch(err => console.log(err))
     }
-  }, [])
+  }, [setToken, setAdmin])
+
   return (
     <Router>
       <Navbar/>
       <Route exact path="/" component={HomePage} />
-      <Route exact path="/login" component={LoginPage} />
+      <Route exact path="/login"
+        render={() => {
+          if (token) return <Redirect to='/admin'/>
+          return <LoginPage/>
+        }}
+      />
       <Route exact path="/questions"
         render={() => {
           if (!token) return <Redirect to='/login' />
@@ -40,6 +51,18 @@ function App() {
         render={() => {
           if (!token) return <Redirect to='/login' />
           return <AdminPage />
+        }}
+      />
+      <Route exact path="/tests"
+        render={() => {
+          if (!token) return <Redirect to='/login' />
+          return <TestsPage />
+        }}
+      />
+      <Route exact path="/tests/add"
+        render={() => {
+          if (!token) return <Redirect to='/login' />
+          return <AddTestPage />
         }}
       />
     </Router>
