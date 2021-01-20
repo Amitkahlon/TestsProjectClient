@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Grid, Label, Modal, Segment } from 'semantic-ui-react'
+import { Button, Modal } from 'semantic-ui-react'
 
 const DeleteModal = ({ trigger, deleteHandler }) => {
 
@@ -19,7 +19,7 @@ const DeleteModal = ({ trigger, deleteHandler }) => {
 
             <Modal.Actions>
                 <Button negative
-                    onClick={(e) => setOpen(false)} >No</Button>
+                    onClick={() => setOpen(false)} >No</Button>
                 <Button positive
                     onClick={(e) => {
                         deleteHandler()
