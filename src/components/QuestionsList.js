@@ -1,35 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Table, TableBody, Button, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
 import serverAccess from "../api/serverAccess";
 import QuestionItem from "../components/QuestionItem";
 
-const QuestionsList = () => {
-    const [questions, setQuestions] = useState([]);
-
-    useEffect(() => {
-        // Anything in here is fired on component mount.
-        document.title = `Manage Questions`;
-        getQuestions()
-
-        return () => {
-            // Anything in here is fired on component unmount.
-            document.title = `Tests Manager`;
-        }
-
-    }, []);
-
-    const getQuestions = () => {
-        serverAccess.get('/api/questions')
-            .then(({ data }) => {
-                console.log(data);
-                if (data) {
-                    setQuestions(data.questions)
-                }
-            })
-            .catch(err => console.log(err))
-    }
-
+const QuestionsList = ({ questions, setQuestions }) => {
+    
     const deleteAction = (id) => {
         serverAccess.delete('/api/questions/' + id)
             .then((res) => {

@@ -2,12 +2,13 @@ import { Route, BrowserRouter as Router, Redirect } from 'react-router-dom';
 import AdminPage from './pages/AdminPage';
 import HomePage from './pages/HomePage';
 import Navbar from './components/Navbar';
-import QuestionPage from './pages/QuestionsPage';
+import ManageQuestionsPage from './pages/ManageQuestionsPage';
 import AddQuestionPage from './pages/AddQuestionPage';
 import LoginPage from './pages/LoginPage';
 import React, { useEffect, useContext } from 'react';
 import { ContextValues } from './context/AppContext';
 import serverAccess from './api/serverAccess';
+import QuestionPage from "./pages/QuestionPage";
 import TestsPage from './pages/TestsPage';
 import AddTestPage from './pages/AddTestPage';
 
@@ -34,7 +35,7 @@ function App() {
       <Route exact path="/questions"
         render={() => {
           if (!token) return <Redirect to='/login' />
-          return <QuestionPage />
+          return <ManageQuestionsPage />
         }} />
       <Route exact path="/addquestion"
         render={() => {
@@ -45,6 +46,12 @@ function App() {
         render={() => {
           if (!token) return <Redirect to='/login' />
           return <AdminPage />
+        }} />
+      <Route exact path="/question"
+        render={() => {
+          if (!token) return <Redirect to='/login' />
+          return <QuestionPage />
+        }} />
         }}
       />
       <Route exact path="/tests"
