@@ -21,7 +21,7 @@ const DeleteModal = ({ trigger, deleteHandler }) => {
                 <Button negative
                     onClick={() => setOpen(false)} >No</Button>
                 <Button positive
-                    onClick={() => {
+                    onClick={(e) => {
                         deleteHandler()
                         setOpen(false)
                     }}>
