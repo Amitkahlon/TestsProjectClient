@@ -17,7 +17,6 @@ const searchQuestionReducer = (state, action) => {
         case "SET_RESULTS":
             console.log(state);
             console.log(action);
-
             return { ...state, results: action.results }
         default:
             throw new Error()

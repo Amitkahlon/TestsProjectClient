@@ -29,7 +29,7 @@ function App() {
           if (!token) return <Redirect to='/login' />
           return <ManageQuestionsPage />
         }} />
-      <Route exact path="/addquestion"
+      <Route exact path="/questions/add"
         render={() => {
           if (!token) return <Redirect to='/login' />
           return <AddQuestionPage />
@@ -39,7 +39,7 @@ function App() {
           if (!token) return <Redirect to='/login' />
           return <AdminPage />
         }} />
-      <Route exact path="/question"
+      <Route exact path="/questions/view"
         render={() => {
           if (!token) return <Redirect to='/login' />
           return <QuestionPage />

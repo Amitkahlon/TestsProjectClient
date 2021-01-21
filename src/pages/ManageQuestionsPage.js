@@ -64,7 +64,6 @@ const ManageQuestionsPage = () => {
         <div>
             <Header style={styles.header}>Manage Questions</Header>
             <Search 
-                width="500px"
                 size="large"
                 loading={loading}
                 onResultSelect={(e, data) =>

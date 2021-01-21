@@ -17,7 +17,7 @@ const QuestionItem = ({ item, deleteAction }) => {
       <Table.Cell>{item.correctAnswers.length + item.incorrectAnswers.length}</Table.Cell>
       <Table.Cell>
         <Link to={{
-          pathname: "/question",
+          pathname: "/questions/view",
           state: {
             question: item
           }

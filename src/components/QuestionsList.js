@@ -42,7 +42,7 @@ const QuestionsList = ({ questions, setQuestions }) => {
                     <Table.HeaderCell />
                     <Table.HeaderCell />
                     <Table.HeaderCell colSpan='4'>
-                        <Link to="/addQuestion">
+                        <Link to="/questions/add">
                             <Button floated='right' icon labelPosition='left' primary size='small' >
                                 <Icon name='plus' />
                             Add Question
