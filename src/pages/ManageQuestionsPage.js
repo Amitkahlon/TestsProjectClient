@@ -1,16 +1,18 @@
-import React, { useReducer, useEffect, useState } from 'react';
+import React, { useReducer, useEffect, useState, useRef, useCallback } from 'react';
 import { Container, Header, Search } from 'semantic-ui-react';
 import QuestionsList from "../components/QuestionsList";
-import _ from 'lodash'
+import _ from 'lodash';
 import searchQuestionReducer, { initialState } from "../reducers/searchQuestionReducer";
 import serverAccess from "../api/serverAccess";
 
-// const source = ["pie", "apple", "pie", "apple", "pie", "apple", "pie", "apple", "pie", "apple",];
+
+
 
 const ManageQuestionsPage = () => {
-
     const [questions, setQuestions] = useState([]);
-    const [state, dispatch] = useReducer(searchQuestionReducer, initialState);
+    const [searchbarState, dispatch] = useReducer(searchQuestionReducer, initialState);
+    const { loading, results, value } = searchbarState;
+
 
     useEffect(() => {
         // Anything in here is fired on component mount.
@@ -30,50 +32,64 @@ const ManageQuestionsPage = () => {
             .then(({ data }) => {
                 if (data) {
                     setQuestions(data.questions)
-                    dispatch({type: "SET_RESULTS", results: data.questions })
+                    dispatch({ type: "SET_RESULTS", results: data.questions })
                 }
             })
             .catch(err => console.error(err))
     }
 
-    const { loading, results, value } = state
+    const filterItems = (searchValue) => {
+        const re = new RegExp(_.escapeRegExp(searchValue), 'i')
+        const isMatch = (result) => re.test(result.title)
 
-    const timeoutRef = React.useRef()
-    const handleSearchChange = React.useCallback((e, data) => {
+        const filtedQuestions = _.filter(questions, isMatch);
+
+        return filtedQuestions;
+    }
+
+
+    const timeoutRef = useRef()
+    const handleSearchChange = (e, data) => {
+        console.log("search occured")
         clearTimeout(timeoutRef.current)
         dispatch({ type: 'START_SEARCH', query: data.value })
 
         timeoutRef.current = setTimeout(() => {
             if (data.value.length === 0) {
-                dispatch({ type: 'CLEAN_QUERY' })
-
+                dispatch({ type: 'CLEAN_QUERY', results: questions })
                 return
             }
 
-            const re = new RegExp(_.escapeRegExp(data.value), 'i')
-            const isMatch = (result) => re.test(result.title)
+            const filtedQuestions = filterItems(data.value)
 
             dispatch({
                 type: 'FINISH_SEARCH',
-                results: _.filter(questions, isMatch),
+                results: filtedQuestions,
             })
-        }, 300)
-    }, [])
 
+        }, 300)
+
+
+    }
     return (
         <div>
             <Header style={styles.header}>Manage Questions</Header>
-            <Search 
-                size="large"
+            <Search
                 loading={loading}
-                onResultSelect={(e, data) =>
-                    dispatch({ type: 'UPDATE_SELECTION', selection: data.result.title })
-                }
+                onResultSelect={(e, data) => {
+                    console.log(data.result.title)
+                    dispatch({ type: 'UPDATE_SELECTION', selection: data.result.title, results: filterItems(data.result.title) })
+                }}
                 onSearchChange={handleSearchChange}
-                results={results}
+                results={results.map((res, i) => {
+                    return { title: res.title, key: i}
+                })}
                 value={value}
             />
-            <QuestionsList questions={state.results} setQuestions={setQuestions} />
+            <QuestionsList questions={searchbarState.results} setQuestions={(questions) => {
+                setQuestions(questions);
+                dispatch({ type: "SET_RESULTS", results: questions })
+            }} />
         </div>
     )
 }

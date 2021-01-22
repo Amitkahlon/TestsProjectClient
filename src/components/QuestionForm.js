@@ -8,32 +8,17 @@ import {
     TextArea,
     Icon
 } from 'semantic-ui-react'
-import serverAccess from "../api/serverAccess";
 import AnswerForm from "./AnswerForm";
 import QuestionTagInput from './QuestionTagInput';
-import questionReducer from '../reducers/addQuestionReducer'
-
+import questionReducer from '../reducers/addQuestionReducer';
 
 const questionTypeOptions = [
     { key: 1, text: 'Single Answer', value: "SingleChoiceQuestion" },
     { key: 2, text: 'Multi Answer', value: "MultipleSelectionQuestion" },
 ]
 
-const initialState = {
-    title: "",
-    subTitle: "",
-    questionType: "",
-    answers: [{ id: 0, text: "", isCorrect: false }],
-    answersDisplay: "vertical",
-    tags: [{ id: 'Question', text: 'Question' }, { id: 'Hard', text: 'Hard' }],
-    answersIdCounter: 1
-}
-
-
-
-const AddQuestionForm = () => {
+const QuestionForm = ({ initialState, submitText, onSubmit }) => {
     const [question, dispatch] = useReducer(questionReducer, initialState)
-
     const submitQuestion = async () => {
         let submitQuestion = { ...question }
         submitQuestion.correctAnswers = question.answers.filter(answer => answer.isCorrect).map(answer => answer.text);
@@ -43,11 +28,7 @@ const AddQuestionForm = () => {
         delete submitQuestion.answers;
         delete submitQuestion.answersIdCounter;
 
-        console.log(submitQuestion);
-
-        serverAccess.post("api/questions", { question: submitQuestion })
-            .then(res => console.log(res))
-            .catch(err => console.log(err))
+        onSubmit(submitQuestion);
     }
 
     return (
@@ -113,10 +94,9 @@ const AddQuestionForm = () => {
 
             <QuestionTagInput tags={question.tags} setTags={(payload) => dispatch({ type: "SET_TAGS", payload })} />
 
-            <Form.Button content='Add Question' primary onClick={submitQuestion} />
-
+            <Form.Button content={submitText} primary onClick={submitQuestion} />
         </Form>
     )
 }
 
-export default AddQuestionForm;
+export default QuestionForm;

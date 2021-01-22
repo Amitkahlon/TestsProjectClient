@@ -8,9 +8,10 @@ import LoginPage from './pages/LoginPage';
 import React, { useEffect, useContext } from 'react';
 import { ContextValues } from './context/AppContext';
 import serverAccess from './api/serverAccess';
-import QuestionPage from "./pages/QuestionPage";
+import ViewQuestionPage from "./pages/ViewQuestionPage";
 import TestsPage from './pages/TestsPage';
 import AddTestPage from './pages/AddTestPage';
+import EditQuestionPage from './pages/EditQuestionPage';
 
 function App() {
   const { token, setToken, setAdmin } = useContext(ContextValues)
@@ -28,8 +29,8 @@ function App() {
       <Route exact path="/" component={HomePage} />
       <Route exact path="/login"
         render={() => {
-          if (token) return <Redirect to='/admin'/>
-          return <LoginPage/>
+          if (token) return <Redirect to='/admin' />
+          return <LoginPage />
         }}
       />
       <Route exact path="/questions"
@@ -42,6 +43,11 @@ function App() {
           if (!token) return <Redirect to='/login' />
           return <AddQuestionPage />
         }} />
+      <Route exact path="/questions/edit"
+        render={() => {
+          if (!token) return <Redirect to='/login' />
+          return <EditQuestionPage />
+        }} />
       <Route exact path="/admin"
         render={() => {
           if (!token) return <Redirect to='/login' />
@@ -50,7 +56,7 @@ function App() {
       <Route exact path="/questions/view"
         render={() => {
           if (!token) return <Redirect to='/login' />
-          return <QuestionPage />
+          return <ViewQuestionPage />
         }}
       />
       <Route exact path="/tests"

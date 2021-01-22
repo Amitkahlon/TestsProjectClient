@@ -12,9 +12,9 @@ const DeleteModal = ({ trigger, deleteHandler, header, message }) => {
             open={open}
             trigger={trigger}>
 
-            <Modal.Header>{header}</Modal.Header>
-            <Modal.Content>
-                <p>{message}</p>
+            <Modal.Header style={{backgroundColor: '#ff0000'}}>{header}</Modal.Header>
+            <Modal.Content style={{ fontWeight: 'bold', fontSize: '18px'}}>
+                <p >{message}</p>
             </Modal.Content>
 
             <Modal.Actions>

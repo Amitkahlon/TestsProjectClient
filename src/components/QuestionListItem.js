@@ -1,11 +1,11 @@
 import React from "react";
 import { Table, Button, Icon } from 'semantic-ui-react'
-import DeleteModal from "../components/DeleteModal";
+import DeleteModal from "./controls/DeleteModal";
 import { Link } from 'react-router-dom';
 
 
 
-const QuestionItem = ({ item, deleteAction }) => {
+const QuestionListItem = ({ item, deleteAction }) => {
 
   return (
     <Table.Row>
@@ -27,10 +27,17 @@ const QuestionItem = ({ item, deleteAction }) => {
           View
           </Button>
         </Link>
-        <Button size="tiny" color="black">
-          <Icon name='edit' />
+        <Link to={{
+          pathname: "/questions/edit",
+          state: {
+            question: item
+          }
+        }}>
+          <Button size="tiny" color="black">
+            <Icon name='edit' />
           Edit
           </Button>
+        </Link>
         <DeleteModal
           deleteHandler={() => deleteAction(item._id)}
           message="Are you sure you want to delete this question?"
@@ -45,4 +52,4 @@ const QuestionItem = ({ item, deleteAction }) => {
 }
 
 
-export default QuestionItem;
+export default QuestionListItem;
