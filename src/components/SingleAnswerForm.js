@@ -6,21 +6,23 @@ import {
     Label,
 } from 'semantic-ui-react'
 
-const AnswerForm = ({ answerItem, index, removeAnswer, setText, setIsCorrect }) => {
+const SingleAnswerForm = ({ answerItem, index, removeAnswer, setText, setCorrectAnswer, correctAnswer }) => {
+console.log(answerItem);
+
     return (
         <Form.Group>
             <Label>{index}</Label>
             <Form.Input
                 placeholder='Enter Answer text...'
-                content="dsad"
                 value={answerItem.text} 
                 onChange={(e, { value }) => setText(value)}
             />
 
-            <Form.Checkbox
+            <Form.Radio
                 label="Correct"
-                onChange={() => setIsCorrect(!answerItem.isCorrect) }
-                checked={answerItem.isCorrect}
+                onChange={() => setCorrectAnswer()}
+                value={answerItem.id}
+                checked={correctAnswer.id === answerItem.id }
             />
 
             <Button size="mini" color="red" onClick={() => removeAnswer(answerItem.id)}>
@@ -31,4 +33,4 @@ const AnswerForm = ({ answerItem, index, removeAnswer, setText, setIsCorrect }) 
     )
 }
 
-export default AnswerForm
+export default SingleAnswerForm

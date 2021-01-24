@@ -9,6 +9,14 @@ const questionReducer = (state, action) => {
             newState.subTitle = action.payload;
             break;
         case 'SET_QUESTIONTYPE':
+            if (state.questionType === 'MultipleSelectionQuestion') {
+                newState.answers.forEach(answer => {
+                    answer.isCorrect = false;
+                })
+                if (newState.answers[0]) {
+                    newState.answers[0].isCorrect = true;
+                }
+            }
             newState.questionType = action.payload;
             break;
         case 'SET_ANSWERDISPLAY':
@@ -20,8 +28,19 @@ const questionReducer = (state, action) => {
             console.log(newState.answersIdCounter);
             break;
         case 'REMOVE_ANSWER':
-            let id = action.payload;
-            newState.answers = newState.answers.filter((answer) => answer.id !== id)
+            if (newState.answers.length > 1) {
+                let id = action.payload;
+                //to not cause erorr when removing a correct answer from a single choice question.
+                //also when tried to use splice it cause error so im using filter instead(worst complexity)
+                const index = state.answers.findIndex((answer => answer.id === id));
+                if (state.questionType === 'SingleChoiceQuestion' && state.answers[index].isCorrect === true) {
+                    newState.answers = newState.answers.filter((answer) => answer.id !== id);
+                    newState.answers[0].isCorrect = true;
+                }
+                else {
+                    newState.answers = newState.answers.filter((answer) => answer.id !== id)
+                }
+            }
             break;
         case "SET_TAGS":
             let newTags = action.payload;
@@ -39,7 +58,19 @@ const questionReducer = (state, action) => {
             let { answers } = state;
             let index = answers.findIndex((answer => answer.id === payload.id));
             newState.answers[index].isCorrect = payload.isCorrect;
-            console.log(newState.answers[index]);
+            console.log(newState.answers);
+            break;
+        }
+        case "SET_CORRECT_ANSWER": {
+            let { payload } = action;
+            newState.answers.forEach((answer) => {
+                if (answer.id === payload.id) {
+                    answer.isCorrect = true;
+                } else {
+                    answer.isCorrect = false;
+                }
+            });
+            console.log(newState.answers);
             break;
         }
         default: break;

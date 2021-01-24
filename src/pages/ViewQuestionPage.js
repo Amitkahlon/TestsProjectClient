@@ -11,7 +11,7 @@ const QuestionPage = (props) => {
 
     return (
         <Container>
-            <Header>Edit Question</Header>
+            <Header>View Question</Header>
             <Question question={question} />
         </Container>
     )
