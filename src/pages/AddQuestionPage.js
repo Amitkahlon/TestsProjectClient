@@ -14,7 +14,6 @@ const AddQuestionPage = () => {
     const [errorText, setError] = useState('');
 
 
-
     return (
         <Container>
             <h1 style={styles.header}>Add Question</h1>

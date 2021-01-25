@@ -1,4 +1,6 @@
 import React, { useReducer } from "react";
+import { Link } from 'react-router-dom';
+
 import {
     Button,
     Divider,
@@ -6,13 +8,13 @@ import {
     Form,
     Radio,
     TextArea,
-    Icon
+    Icon,
+    List
 } from 'semantic-ui-react'
-import AnswerForm from "./MultiAnswerForm";
 import QuestionTagInput from './QuestionTagInput';
 import questionReducer from '../reducers/addQuestionReducer';
-import SingleAnswerForm from "./SingleAnswerForm";
-import MultiAnswerForm from "./MultiAnswerForm";
+import AnswerForm from "./AnswersForm";
+
 
 const questionTypeOptions = [
     { key: 1, text: 'Single Answer', value: "SingleChoiceQuestion" },
@@ -22,41 +24,23 @@ const questionTypeOptions = [
 const QuestionForm = ({ initialState, submitText, onSubmit }) => {
     const [question, dispatch] = useReducer(questionReducer, initialState)
     const submitQuestion = () => {
-        let submitQuestion = { ...question }
-        submitQuestion.correctAnswers = question.answers.filter(answer => answer.isCorrect).map(answer => answer.text);
-        submitQuestion.incorrectAnswers = question.answers.filter(answer => !answer.isCorrect).map(answer => answer.text);
-        submitQuestion.tags = question.tags.map(tag => tag.text)
+        const questionToSubmit = createQuestionForSubmit(question);
 
-        delete submitQuestion.answers;
-        delete submitQuestion.answersIdCounter;
-
-        onSubmit(submitQuestion);
+        onSubmit(questionToSubmit);
     }
 
-    const AnswerForm = () => {
-        if (question.questionType === 'SingleChoiceQuestion') {
-            const correctAnswer = question.answers.find((answer) => answer.isCorrect === true);
-            // console.log("correct answer", correctAnswer);
-            return (
-                question.answers.map((answerItem, i) =>
-                    <SingleAnswerForm answerItem={answerItem} key={answerItem.id} index={i} removeAnswer={(id) => dispatch({ type: "REMOVE_ANSWER", payload: id })}
-                        setText={(text) => dispatch({ type: "SET_ANSWER_TEXT", payload: { text, id: answerItem.id } })}
-                        setCorrectAnswer={() => dispatch({ type: "SET_CORRECT_ANSWER", payload: { id: answerItem.id } })}
-                        correctAnswer={correctAnswer}
-                    />
-                )
-            )
-        } else if (question.questionType === 'MultipleSelectionQuestion') {
-            return (
-                question.answers.map((answerItem, i) =>
-                    <MultiAnswerForm answerItem={answerItem} key={answerItem.id} index={i} removeAnswer={(id) => dispatch({ type: "REMOVE_ANSWER", payload: id })}
-                        setText={(text) => dispatch({ type: "SET_ANSWER_TEXT", payload: { text, id: answerItem.id } })}
-                        setIsCorrect={(isCorrect) => dispatch({ type: "SET_ANSWER_ISCORRECT", payload: { isCorrect, id: answerItem.id } })} />
-                )
-            )
-        } else {
-            <p>error, question type is missing or incorrect</p>
-        }
+    const createQuestionForSubmit = (formQuestion) => {
+        let newQuestion = { ...formQuestion }
+
+
+        newQuestion.correctAnswers = question.answers.filter(answer => answer.isCorrect).map(answer => answer.text);
+        newQuestion.incorrectAnswers = question.answers.filter(answer => !answer.isCorrect).map(answer => answer.text);
+        newQuestion.tags = question.tags.map(tag => tag.text)
+
+        delete newQuestion.answers;
+        delete newQuestion.answersIdCounter;
+
+        return newQuestion;
     }
 
     return (
@@ -108,8 +92,9 @@ const QuestionForm = ({ initialState, submitText, onSubmit }) => {
 
             <Divider />
 
-            <AnswerForm />
+            <AnswerForm question={question} dispatch={dispatch} />
 
+            <Divider />
 
             <Button primary onClick={() => dispatch({ type: "ADD_QUESTION" })}>
                 <Icon name='plus' />
@@ -118,7 +103,23 @@ const QuestionForm = ({ initialState, submitText, onSubmit }) => {
 
             <QuestionTagInput tags={question.tags} setTags={(payload) => dispatch({ type: "SET_TAGS", payload })} />
 
-            <Form.Button content={submitText} primary onClick={submitQuestion} />
+            <List horizontal>
+                <List.Item>
+                    <Form.Button content={submitText} primary onClick={submitQuestion} />
+                </List.Item>
+                <List.Item>
+                    <Link to={{
+                        pathname: "/questions/view",
+                        state: {
+                            question: createQuestionForSubmit(question)
+                        }
+                    }}>
+                        <Form.Button content="Preview" primary />
+                    </Link>
+                </List.Item>
+            </List>
+
+
         </Form>
     )
 }

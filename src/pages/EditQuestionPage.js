@@ -84,7 +84,7 @@ const EditQuestionPage = () => {
 
             <p style={{ marginTop: "30px", color: "red", fontSize: "20px" }}>{errorText}</p>
 
-            <SuccessModal text="You successfully deleted a question" open={sucessOpen} setOpen={setSucessOpen} />
+            <SuccessModal text="You successfully edit the question" open={sucessOpen} setOpen={setSucessOpen} okRedirectPath="/questions"/>
             <ProblemModal text="Something went wrong when trying to delete the question, question might not be deleted" open={problemOpen} setOpen={setProblemOpen} />
         </Container>
     )

@@ -1,31 +1,23 @@
 import React from "react";
-import { Button, Container, Header, List } from 'semantic-ui-react'
+import { Button, Checkbox, Container, Header, List, Radio } from 'semantic-ui-react'
+import AnswerSelection from './AnswerSelection';
 
 const Question = ({ question }) => {
-console.log(question);
-    const Answers = () => {
-        return <List>
-            {
-                question.incorrectAnswers.map((answer, i) => {
-                    return (
-                        <>
-                            <p>{answer}</p>
-                            <p>{i}</p>
-                        </>
-                    )
-                })
-            }
-        </List>
-
-    }
-
 
     return (
         <Container textAlign="left">
             <Header as="h1">{question.title}</Header>
             <Header as="h4">{question.subTitle}</Header>
-            <Answers />
+            <AnswerSelection question={question} />
 
+            <List horizontal>
+                <List.Item>
+                    <Button>Last Question</Button>
+                </List.Item>
+                <List.Item>
+                    <Button>Next Question</Button>
+                </List.Item>
+            </List>
         </Container>
     )
 }
