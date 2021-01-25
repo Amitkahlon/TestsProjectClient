@@ -1,0 +1,8 @@
+.questions-table{
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+.searchbar{
+    display: flex;
+}

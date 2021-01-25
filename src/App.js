@@ -11,6 +11,8 @@ import serverAccess from './api/serverAccess';
 import ViewQuestionPage from "./pages/ViewQuestionPage";
 import TestsPage from './pages/TestsPage';
 import AddTestPage from './pages/AddTestPage';
+import EditTestPage from './pages/EditTestPage';
+import UserFormPage from './pages/UserFormPage';
 import EditQuestionPage from './pages/EditQuestionPage';
 
 function App() {
@@ -71,6 +73,13 @@ function App() {
           return <AddTestPage />
         }}
       />
+      <Route exact path="/tests/edit"
+        render={() => {
+          if (!token) return <Redirect to='/login' />
+          return <EditTestPage />
+        }}
+      />
+      {/* <Route exact path="/:id" component={UserFormPage}/> */}
     </Router>
   );
 }
