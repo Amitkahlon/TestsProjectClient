@@ -1,20 +1,19 @@
-import React, { useContext, useReducer, useState } from "react";
+import React, { useReducer } from "react";
+import { Link } from 'react-router-dom';
+
 import {
     Button,
-    Checkbox,
     Divider,
     Dropdown,
     Form,
-    Input,
     Radio,
-    Select,
     TextArea,
-    Icon
+    Icon,
+    List
 } from 'semantic-ui-react'
-import serverAccess from "../api/serverAccess";
-import AnswerForm from "./AnswerForm";
 import QuestionTagInput from './QuestionTagInput';
-import questionReducer from '../reducers/addQuestionReducer'
+import questionReducer from '../reducers/addQuestionReducer';
+import AnswerForm from "./AnswersForm";
 
 
 const questionTypeOptions = [
@@ -22,35 +21,26 @@ const questionTypeOptions = [
     { key: 2, text: 'Multi Answer', value: "MultipleSelectionQuestion" },
 ]
 
-const initialState = {
-    title: "",
-    subTitle: "",
-    questionType: "",
-    answers: [{ id: 0, text: "", isCorrect: false }],
-    answersDisplay: "vertical",
-    tags: [{ id: 'Question', text: 'Question' }, { id: 'Hard', text: 'Hard' }],
-    answersIdCounter: 1
-}
-
-
-
-const AddQuestionForm = () => {
+const QuestionForm = ({ initialState, submitText, onSubmit }) => {
     const [question, dispatch] = useReducer(questionReducer, initialState)
+    const submitQuestion = () => {
+        const questionToSubmit = createQuestionForSubmit(question);
 
-    const submitQuestion = async () => {
-        let submitQuestion = { ...question }
-        submitQuestion.correctAnswers = question.answers.filter(answer => answer.isCorrect).map(answer => answer.text);
-        submitQuestion.incorrectAnswers = question.answers.filter(answer => !answer.isCorrect).map(answer => answer.text);
-        submitQuestion.tags = question.tags.map(tag => tag.text)
+        onSubmit(questionToSubmit);
+    }
 
-        delete submitQuestion.answers;
-        delete submitQuestion.answersIdCounter;
+    const createQuestionForSubmit = (formQuestion) => {
+        let newQuestion = { ...formQuestion }
 
-        console.log(submitQuestion);
 
-        serverAccess.post("api/questions", { question: submitQuestion })
-            .then(res => console.log(res))
-            .catch(err => console.log(err))
+        newQuestion.correctAnswers = question.answers.filter(answer => answer.isCorrect).map(answer => answer.text);
+        newQuestion.incorrectAnswers = question.answers.filter(answer => !answer.isCorrect).map(answer => answer.text);
+        newQuestion.tags = question.tags.map(tag => tag.text)
+
+        delete newQuestion.answers;
+        delete newQuestion.answersIdCounter;
+
+        return newQuestion;
     }
 
     return (
@@ -102,13 +92,10 @@ const AddQuestionForm = () => {
 
             <Divider />
 
-            {
-                question.answers.map((answerItem, i) =>
-                    <AnswerForm answerItem={answerItem} key={answerItem.id} index={i} removeAnswer={(id) => dispatch({ type: "REMOVE_ANSWER", payload: id })}
-                        setText={(text) => dispatch({ type: "SET_ANSWER_TEXT", payload: { text, id: answerItem.id } })}
-                        setIsCorrect={(isCorrect) => dispatch({ type: "SET_ANSWER_ISCORRECT", payload: { isCorrect, id: answerItem.id } })} />
-                )
-            }
+            <AnswerForm question={question} dispatch={dispatch} />
+
+            <Divider />
+
             <Button primary onClick={() => dispatch({ type: "ADD_QUESTION" })}>
                 <Icon name='plus' />
                     Add an answer
@@ -116,10 +103,25 @@ const AddQuestionForm = () => {
 
             <QuestionTagInput tags={question.tags} setTags={(payload) => dispatch({ type: "SET_TAGS", payload })} />
 
-            <Form.Button content='Add Question' primary onClick={submitQuestion} />
+            <List horizontal>
+                <List.Item>
+                    <Form.Button content={submitText} primary onClick={submitQuestion} />
+                </List.Item>
+                <List.Item>
+                    <Link to={{
+                        pathname: "/questions/view",
+                        state: {
+                            question: createQuestionForSubmit(question)
+                        }
+                    }}>
+                        <Form.Button content="Preview" primary />
+                    </Link>
+                </List.Item>
+            </List>
+
 
         </Form>
     )
 }
 
-export default AddQuestionForm;
+export default QuestionForm;

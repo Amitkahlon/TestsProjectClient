@@ -7,11 +7,8 @@
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.6.0",
     "axios": "^0.21.1",
-<<<<<<< Updated upstream
-=======
     "formik": "^2.2.6",
     "lodash": "^4.17.20",
->>>>>>> Stashed changes
     "react": "^17.0.1",
     "react-dnd": "^7.6.2",
     "react-dnd-html5-backend": "^7.6.2",

@@ -1,81 +1,77 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Table, TableBody, Button, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
 import serverAccess from "../api/serverAccess";
-import QuestionItem from "../components/QuestionItem";
+import QuestionListItem from './QuestionListItem';
+import ProblemModal from './controls/ProblemModal';
+import SuccessModal from './controls/SuccessModal';
 
-const QuestionsList = () => {
-    const [questions, setQuestions] = useState([]);
 
-    useEffect(() => {
-        // Anything in here is fired on component mount.
-        document.title = `Manage Questions`;
-        getQuestions()
+const QuestionsList = ({ questions, setQuestions }) => {
+    const [sucessOpen, setSucessOpen] = useState(false);
+    const [problemOpen, setProblemOpen] = useState(false);
 
-        return () => {
-            // Anything in here is fired on component unmount.
-            document.title = `Tests Manager`;
-        }
-
-    }, []);
-
-    const getQuestions = () => {
-        serverAccess.get('/api/questions')
-            .then(({ data }) => {
-                console.log(data);
-                if (data) {
-                    setQuestions(data.questions)
-                }
-            })
-            .catch(err => console.log(err))
-    }
 
     const deleteAction = (id) => {
         serverAccess.delete('/api/questions/' + id)
             .then((res) => {
-                setQuestions(questions.filter(item => item._id !== id))
+                console.log(res);
+                if(res.data.question){
+                    setSucessOpen(true);
+                    setQuestions(questions.filter(item => item._id !== id));
+                }
+                else {
+                    setProblemOpen(true);
+                }
             })
-            .catch((err) => console.error(err));
+            .catch((err) =>  {
+                setProblemOpen(true);
+                console.error(err);
+            });
     }
 
     return (
-        <Table celled striped selectable>
-            <Table.Header>
-                <Table.Row>
-                    <Table.HeaderCell>Title</Table.HeaderCell>
-                    <Table.HeaderCell>Subtitle</Table.HeaderCell>
-                    <Table.HeaderCell>Type</Table.HeaderCell>
-                    <Table.HeaderCell>Display</Table.HeaderCell>
-                    <Table.HeaderCell>Tags</Table.HeaderCell>
-                    <Table.HeaderCell>Answers</Table.HeaderCell>
-                    <Table.HeaderCell width="3"></Table.HeaderCell>
-                </Table.Row>
-            </Table.Header>
+        <>
+            <Table celled striped selectable>
+                <Table.Header>
+                    <Table.Row>
+                        <Table.HeaderCell>Title</Table.HeaderCell>
+                        <Table.HeaderCell>Subtitle</Table.HeaderCell>
+                        <Table.HeaderCell>Type</Table.HeaderCell>
+                        <Table.HeaderCell>Display</Table.HeaderCell>
+                        <Table.HeaderCell>Tags</Table.HeaderCell>
+                        <Table.HeaderCell>Answers</Table.HeaderCell>
+                        <Table.HeaderCell width="3"></Table.HeaderCell>
+                    </Table.Row>
+                </Table.Header>
 
-            <TableBody>
-                {
-                    questions.map(question =>
-                        <QuestionItem item={question} key={question._id} deleteAction={deleteAction} />
-                    )
-                }
-            </TableBody>
+                <TableBody>
+                    {
+                        questions.map(question =>
+                            <QuestionListItem item={question} key={question._id} deleteAction={deleteAction} />
+                        )
+                    }
+                </TableBody>
 
-            <Table.Footer fullWidth>
-                <Table.Row>
-                    <Table.HeaderCell />
-                    <Table.HeaderCell />
-                    <Table.HeaderCell />
-                    <Table.HeaderCell colSpan='4'>
-                        <Link to="/addQuestion">
-                            <Button floated='right' icon labelPosition='left' primary size='small' >
-                                <Icon name='plus' />
+                <Table.Footer fullWidth>
+                    <Table.Row>
+                        <Table.HeaderCell />
+                        <Table.HeaderCell />
+                        <Table.HeaderCell />
+                        <Table.HeaderCell colSpan='4'>
+                            <Link to="/questions/add">
+                                <Button floated='right' icon labelPosition='left' primary size='small' >
+                                    <Icon name='plus' />
                             Add Question
                         </Button>
-                        </Link>
-                    </Table.HeaderCell>
-                </Table.Row>
-            </Table.Footer>
-        </Table>
+                            </Link>
+                        </Table.HeaderCell>
+                    </Table.Row>
+                </Table.Footer>
+            </Table>
+            <SuccessModal text="You successfully deleted a question" open={sucessOpen} setOpen={setSucessOpen} />
+            <ProblemModal text="Something went wrong when trying to delete the question, question might not be deleted" open={problemOpen} setOpen={setProblemOpen} />
+        </>
     );
 }
 
