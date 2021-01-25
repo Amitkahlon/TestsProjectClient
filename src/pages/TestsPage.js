@@ -8,7 +8,7 @@ import serverAccess from '../api/serverAccess';
 import TestsList from '../components/TestsList';
 import { ContextValues } from '../context/AppContext';
 
-const TestsPage = (props) => {
+const TestsPage = () => {
     const { admin } = useContext(ContextValues)
     const [testsList, setTestsList] = useState([])
 
@@ -27,7 +27,7 @@ const TestsPage = (props) => {
                     </Button>
                 </Link>
             </Container>
-            <TestsList tests={testsList} />
+            <TestsList tests={testsList} setTests={setTestsList} />
         </Container>
     );
 }

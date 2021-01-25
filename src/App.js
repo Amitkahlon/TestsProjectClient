@@ -10,6 +10,8 @@ import { ContextValues } from './context/AppContext';
 import serverAccess from './api/serverAccess';
 import TestsPage from './pages/TestsPage';
 import AddTestPage from './pages/AddTestPage';
+import EditTestPage from './pages/EditTestPage';
+import UserFormPage from './pages/UserFormPage';
 
 function App() {
   const { token, setToken, setAdmin } = useContext(ContextValues)
@@ -59,6 +61,13 @@ function App() {
           return <AddTestPage />
         }}
       />
+      <Route exact path="/tests/edit"
+        render={() => {
+          if (!token) return <Redirect to='/login' />
+          return <EditTestPage />
+        }}
+      />
+      {/* <Route exact path="/:id" component={UserFormPage}/> */}
     </Router>
   );
 }

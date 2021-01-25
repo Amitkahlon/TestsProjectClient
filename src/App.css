@@ -21,3 +21,7 @@ body{
 .line:first-child{
     margin-left: 0px;
 }
+
+.line.testbtns{
+    justify-content: space-evenly;
+}
