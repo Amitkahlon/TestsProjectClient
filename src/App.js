@@ -15,6 +15,9 @@ import EditTestPage from './pages/EditTestPage';
 import UserFormPage from './pages/UserFormPage';
 import EditQuestionPage from './pages/EditQuestionPage';
 import UserTestPage from './pages/UserTestPage';
+import ReportsPage from './pages/ReportsPage';
+import TestReportsPage from './pages/TestReportsPage';
+import StudentReportsPage from './pages/StudentReportsPage';
 
 function App() {
   const { token, setToken, setAdmin, user } = useContext(ContextValues)
@@ -85,6 +88,23 @@ function App() {
         render={() => {
           if(!user) return <Redirect to='/'/>
           return <UserTestPage />
+      />
+      <Route exact path="/reports"
+        render={() => {
+          if (!token) return <Redirect to='/login' />
+          return <ReportsPage />
+        }}
+      />
+      <Route exact path="/reports/test"
+        render={() => {
+          if (!token) return <Redirect to='/login' />
+          return <TestReportsPage />
+        }}
+      />
+      <Route exact path="/reports/student"
+        render={() => {
+          if (!token) return <Redirect to='/login' />
+          return <StudentReportsPage />
         }}
       />
     </Router>
