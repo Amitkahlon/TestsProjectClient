@@ -35,7 +35,6 @@ const AddTestPage = (props) => {
     
     const handleSubmit = async () => {
         const res = await serverAccess.post('/api/tests', { test })
-        console.log(res);
         if (res.data.error) {
             setErrors(res.data.error)
         }
