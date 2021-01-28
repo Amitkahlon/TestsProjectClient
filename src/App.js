@@ -14,6 +14,10 @@ import AddTestPage from './pages/AddTestPage';
 import EditTestPage from './pages/EditTestPage';
 import UserFormPage from './pages/UserFormPage';
 import EditQuestionPage from './pages/EditQuestionPage';
+import ReportsPage from './pages/ReportsPage';
+import TestReportsPage from './pages/TestReportsPage';
+import StudentReportsPage from './pages/StudentReportsPage';
+
 
 function App() {
   const { token, setToken, setAdmin } = useContext(ContextValues)
@@ -73,6 +77,7 @@ function App() {
           return <AddTestPage />
         }}
       />
+<<<<<<< Updated upstream
       <Route exact path="/tests/edit"
         render={() => {
           if (!token) return <Redirect to='/login' />
@@ -80,6 +85,26 @@ function App() {
         }}
       />
       {/* <Route exact path="/:id" component={UserFormPage}/> */}
+=======
+      <Route exact path="/reports"
+        render={() => {
+          if (!token) return <Redirect to='/login' />
+          return <ReportsPage />
+        }}
+      />
+      <Route exact path="/reports/test"
+        render={() => {
+          if (!token) return <Redirect to='/login' />
+          return <TestReportsPage />
+        }}
+      />
+      <Route exact path="/reports/student"
+        render={() => {
+          if (!token) return <Redirect to='/login' />
+          return <StudentReportsPage />
+        }}
+      />
+>>>>>>> Stashed changes
     </Router>
   );
 }
