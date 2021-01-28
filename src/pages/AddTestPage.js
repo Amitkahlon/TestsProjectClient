@@ -22,23 +22,32 @@ const AddTestPage = (props) => {
     const history = useHistory()
 
     useEffect(() => {
-        serverAccess.get('/api/questions').then(res => setQuestions(res.data)).catch(err => console.log(err))
+        serverAccess.get('/api/questions')
+            .then(({ data }) => {
+                if (data.questions) {
+                    setQuestions(data.questions)
+                }
+                else {
+                    console.error(data.message);
+                }
+            })
+            .catch(err => console.log(err))
     }, [setQuestions])
-    
+
     useEffect(() => {
-        dispatch({type: 'SET_QUESTIONS', payload: selectedQuestions})
+        dispatch({ type: 'SET_QUESTIONS', payload: selectedQuestions })
     }, [selectedQuestions])
 
     const handleSelectQuestion = (qts) => {
         setSelectedQuestions(qts)
     }
-    
+
     const handleSubmit = async () => {
         const res = await serverAccess.post('/api/tests', { test })
         if (res.data.error) {
             setErrors(res.data.error)
         }
-        else if(res.data.test){
+        else if (res.data.test) {
             history.push('/tests')
         }
     }

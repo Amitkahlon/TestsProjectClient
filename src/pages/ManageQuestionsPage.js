@@ -31,7 +31,7 @@ const ManageQuestionsPage = () => {
         serverAccess.get('/api/questions')
             .then(({ data }) => {
                 console.log(data);
-                if (!data.message) {
+                if (data.questions) {
                     setQuestions(data.questions)
                     dispatch({ type: "SET_RESULTS", results: data.questions })
                 }else {
