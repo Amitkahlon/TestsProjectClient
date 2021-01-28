@@ -77,7 +77,6 @@ function App() {
           return <AddTestPage />
         }}
       />
-<<<<<<< Updated upstream
       <Route exact path="/tests/edit"
         render={() => {
           if (!token) return <Redirect to='/login' />
@@ -85,7 +84,6 @@ function App() {
         }}
       />
       {/* <Route exact path="/:id" component={UserFormPage}/> */}
-=======
       <Route exact path="/reports"
         render={() => {
           if (!token) return <Redirect to='/login' />
@@ -104,7 +102,6 @@ function App() {
           return <StudentReportsPage />
         }}
       />
->>>>>>> Stashed changes
     </Router>
   );
 }
