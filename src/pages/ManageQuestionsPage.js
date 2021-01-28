@@ -30,9 +30,12 @@ const ManageQuestionsPage = () => {
     const getQuestions = () => {
         serverAccess.get('/api/questions')
             .then(({ data }) => {
-                if (data) {
+                console.log(data);
+                if (!data.message) {
                     setQuestions(data.questions)
                     dispatch({ type: "SET_RESULTS", results: data.questions })
+                }else {
+                    console.error(data.message)
                 }
             })
             .catch(err => console.error(err))
