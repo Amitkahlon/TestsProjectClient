@@ -1,15 +1,19 @@
 const userReducer = (state, action) => {
     switch (action.type) {
         case 'SET_ID':
-            return {...state, id: action.payload}
+            return { ...state, studentId: action.payload }
         case 'SET_EMAIL':
-            return {...state, email: action.payload}
+            return { ...state, studentEmail: action.payload }
         case 'SET_FIRST_NAME':
-            return {...state, firstName: action.payload}
+            return { ...state, studentFirstName: action.payload }
         case 'SET_LAST_NAME':
-            return {...state, lastName: action.payload}
+            return { ...state, studentLastName: action.payload }
         case 'SET_CLASS':
-            return {...state, class: action.payload}
+            return { ...state, class: action.payload }
+        case 'SET_TEST_ID':
+            return { ...state, testId: action.payload }
+        case 'SET_TEST_QUESTIONS':
+            return { ...state, questions: action.payload }
         default:
             return state;
     }
