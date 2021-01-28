@@ -1,0 +1,18 @@
+.questions{
+    margin-top: 10px;
+    display: flex;
+}
+
+.vertical{
+    flex-direction: column;
+}
+
+.horizontal{
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.question-btns{
+    display: flex;
+    justify-content: space-evenly;
+}
