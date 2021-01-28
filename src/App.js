@@ -88,6 +88,7 @@ function App() {
         render={() => {
           if(!user) return <Redirect to='/'/>
           return <UserTestPage />
+        }}
       />
       <Route exact path="/reports"
         render={() => {
