@@ -14,13 +14,13 @@ import AddTestPage from './pages/AddTestPage';
 import EditTestPage from './pages/EditTestPage';
 import UserFormPage from './pages/UserFormPage';
 import EditQuestionPage from './pages/EditQuestionPage';
+import UserTestPage from './pages/UserTestPage';
 import ReportsPage from './pages/ReportsPage';
 import TestReportsPage from './pages/TestReportsPage';
 import StudentReportsPage from './pages/StudentReportsPage';
 
-
 function App() {
-  const { token, setToken, setAdmin } = useContext(ContextValues)
+  const { token, setToken, setAdmin, user } = useContext(ContextValues)
   useEffect(() => {
     if (localStorage.getItem('token') !== null) {
       setToken(localStorage.getItem('token'))
@@ -83,7 +83,12 @@ function App() {
           return <EditTestPage />
         }}
       />
-      {/* <Route exact path="/:id" component={UserFormPage}/> */}
+      <Route exact path="/sign/:id" component={UserFormPage}/>
+      <Route exact path="/test"
+        render={() => {
+          if(!user) return <Redirect to='/'/>
+          return <UserTestPage />
+      />
       <Route exact path="/reports"
         render={() => {
           if (!token) return <Redirect to='/login' />
