@@ -36,7 +36,8 @@ const UserFormPage = () => {
                         qts.push({
                             question:{
                                 title: q.title,
-                                answers: q.answers
+                                answers: q.answers,
+                                questionType: q.questionType
                             }
                         })
                     })

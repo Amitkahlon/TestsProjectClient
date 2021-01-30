@@ -18,6 +18,7 @@ import UserTestPage from './pages/UserTestPage';
 import ReportsPage from './pages/ReportsPage';
 import TestReportsPage from './pages/TestReportsPage';
 import StudentReportsPage from './pages/StudentReportsPage';
+import UserTestResults from './pages/UserTestResults';
 
 function App() {
   const { token, setToken, setAdmin, user } = useContext(ContextValues)
@@ -88,6 +89,13 @@ function App() {
         render={() => {
           if(!user) return <Redirect to='/'/>
           return <UserTestPage />
+        }}
+      />
+      <Route exact path="/test/results"
+        render={() => {
+          if(!user || user.exam.grade < 0) return <Redirect to='/'/>
+          return <UserTestResults />
+        }}
       />
       <Route exact path="/reports"
         render={() => {
