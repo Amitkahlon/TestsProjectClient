@@ -1,60 +1,28 @@
-import React from 'react';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { Card, Checkbox, Radio } from 'semantic-ui-react';
+import React, { useContext, useEffect, useState } from 'react';
+import { Card, Checkbox, Form } from 'semantic-ui-react';
+import { ContextValues } from '../context/AppContext';
 import '../styles/UserTestPage.css'
 
-const ExamQuestion = ({ question, setAnswer }) => {
+const ExamQuestion = ({ question, setAnswer, questionNumber }) => {
+    const {user} = useContext(ContextValues)
     const [selectedAnswer, setSelectedAnswer] = useState([])
+
+    useEffect(() => {
+        if(user.exam.questions[questionNumber].answer && user.exam.questions[questionNumber].answer.length > 0){
+            setSelectedAnswer(user.exam.questions[questionNumber].answer)
+        }else{
+            setSelectedAnswer([])
+        }
+    }, [question])
 
     useEffect(() => {
         setAnswer(selectedAnswer)
     }, [selectedAnswer])
 
-    const generateSelection = () => {
-        switch (question.questionType) {
-            case 'SingleChoiceQuestion':
-                return (
-                    <>
-                        {
-                            question.answers.map(a => (
-                                <Radio
-                                    name='agroup'
-                                    label={a}
-                                    value={a}
-                                    checked={selectedAnswer.find(an => an === a)}
-                                    onChange={handleSelectAnswer}
-                                />
-                            ))
-                        }
-                    </>
-                );
-            case 'MultiChoiceQuestion':
-                return (
-                    <>
-                        {
-                            question.answers.map(a => (
-                                <Checkbox
-                                    name='agroup'
-                                    label={a}
-                                    value={a}
-                                    checked={selectedAnswer.find(an => an === a)}
-                                    onChange={handleSelectAnswer}
-                                />
-                            ))
-                        }
-                    </>
-                )
-            default:
-                break;
-        }
-    }
-
-    const handleSelectAnswer = (e, { value }) => {
-        console.log(selectedAnswer);
-        if (question.questionType === 'SingleChoiceQuestion') {
+    const handleSingleSelect = (e, { value }) => {
+        if(question.questionType === 'SingleChoiceQuestion'){
             setSelectedAnswer([value])
-        } else {
+        }else{
             if (selectedAnswer.includes(value)) {
                 setSelectedAnswer(selectedAnswer.filter(a => a !== value))
             }
@@ -63,15 +31,29 @@ const ExamQuestion = ({ question, setAnswer }) => {
             }
         }
     }
+
     return (
         <Card fluid>
             <Card.Content>
                 <Card.Header>{question.title}</Card.Header>
                 <Card.Description>
-                    {question.description}
+                    {question.subTitle}
                 </Card.Description>
                 <div className={`questions ${question.answersDisplay}`}>
-                    {generateSelection()}
+                    <Form>
+                        {question.answers.map(a =>
+                            <Form.Field>
+                                <Checkbox
+                                    radio={question.questionType === 'SingleChoiceQuestion'}
+                                    name="answersGroup"
+                                    label={a}
+                                    value={a}
+                                    checked={selectedAnswer.includes(a)}
+                                    onChange={handleSingleSelect}
+                                />
+                            </Form.Field>
+                        )}
+                    </Form>
                 </div>
             </Card.Content>
         </Card>
