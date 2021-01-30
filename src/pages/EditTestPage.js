@@ -20,7 +20,9 @@ const EditTestPage = () => {
     const [errors, setErrors] = useState(null)
     const [selectedQuestions, setSelectedQuestions] = useState(test.questions)
     useEffect(() => {
-        serverAccess.get('/api/questions').then(res => setQuestions(res.data)).catch(err => setErrors(err))
+        serverAccess.get('/api/questions')
+        .then(({ data }) => setQuestions(data.questions))
+        .catch(err => setErrors(err))
     }, [setQuestions])
 
     useEffect(() => {
