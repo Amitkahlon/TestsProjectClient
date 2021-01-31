@@ -15,6 +15,8 @@ const QuestionListItem = ({ item, deleteAction }) => {
       <Table.Cell>{item.answersDisplay}</Table.Cell>
       <Table.Cell>{item.tags.join(', ')}</Table.Cell>
       <Table.Cell>{item.correctAnswers.length + item.incorrectAnswers.length}</Table.Cell>
+      <Table.Cell>10/10/2020 placeholder</Table.Cell>
+
       <Table.Cell>
         <Link to={{
           pathname: "/questions/view",

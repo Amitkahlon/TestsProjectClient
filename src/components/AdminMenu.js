@@ -42,10 +42,15 @@ const AdminMenu = () => {
                     <Link to="/organizations">
                         <Button primary>Manage Organizations</Button>
                     </Link>
+                    <Link to="/reports">
+                        <Button primary>Reports</Button>
+                    </Link>
                 </> : <></>}
             </div>
         </div >
     );
 }
+
+
 
 export default AdminMenu;

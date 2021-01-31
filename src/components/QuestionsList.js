@@ -41,6 +41,7 @@ const QuestionsList = ({ questions, setQuestions }) => {
                         <Table.HeaderCell>Display</Table.HeaderCell>
                         <Table.HeaderCell>Tags</Table.HeaderCell>
                         <Table.HeaderCell>Answers</Table.HeaderCell>
+                        <Table.HeaderCell>Last Edited</Table.HeaderCell>
                         <Table.HeaderCell width="3"></Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>
@@ -58,6 +59,8 @@ const QuestionsList = ({ questions, setQuestions }) => {
                         <Table.HeaderCell />
                         <Table.HeaderCell />
                         <Table.HeaderCell />
+                        <Table.HeaderCell />
+
                         <Table.HeaderCell colSpan='4'>
                             <Link to="/questions/add">
                                 <Button floated='right' icon labelPosition='left' primary size='small' >
