@@ -14,7 +14,9 @@ const EditTestPage = () => {
         description: location.state.description,
         passGrade: location.state.passGrade,
         showCorrectAnswers: location.state.showCorrectAnswers,
-        questions: location.state.questions.map(q => q._id)
+        questions: location.state.questions.map(q => q._id),
+        passMessage: location.state.passMessage,
+        failMessage: location.state.failMessage
     }
     const [test, dispatch] = useReducer(testReducer, initialState)
     const [errors, setErrors] = useState(null)
@@ -24,7 +26,7 @@ const EditTestPage = () => {
     }, [setQuestions])
 
     useEffect(() => {
-        dispatch({type: 'SET_QUESTIONS', payload: selectedQuestions})
+        dispatch({ type: 'SET_QUESTIONS', payload: selectedQuestions })
     }, [selectedQuestions])
 
     const handleSelectQuestion = (qts) => {
@@ -32,12 +34,11 @@ const EditTestPage = () => {
     }
 
     const handleSubmit = async () => {
-        const res = await serverAccess.put(`/api/tests/${location.state._id}`, {test: test})
-        if(res)
-        {
-            if(res.data.test){
+        const res = await serverAccess.put(`/api/tests/${location.state._id}`, { test: test })
+        if (res) {
+            if (res.data.test) {
                 history.push('/tests')
-            }else if(res.data.error){
+            } else if (res.data.error) {
                 setErrors(res.data.error)
             }
         }
@@ -95,8 +96,26 @@ const EditTestPage = () => {
                                         </Form.Field>
                                         <Form.Field>
                                             <div className="questions-table">
-                                                <NewTestQuestionsList questions={questions} handleSelectQuestion={handleSelectQuestion} editQts={test.questions}/>
+                                                <NewTestQuestionsList questions={questions} handleSelectQuestion={handleSelectQuestion} editQts={test.questions} />
                                             </div>
+                                        </Form.Field>
+                                        <Form.Field>
+                                            <Form.Input
+                                                label='Text for the user in case of passing the test:'
+                                                type='text'
+                                                control={TextArea}
+                                                value={test.passMessage}
+                                                onChange={(e) => dispatch({ type: 'SET_PASS_MESSAGE', payload: e.target.value })}
+                                            />
+                                        </Form.Field>
+                                        <Form.Field>
+                                            <Form.Input
+                                                label='Text for the user in case of failing the test:'
+                                                type='text'
+                                                control={TextArea}
+                                                value={test.failMessage}
+                                                onChange={(e) => dispatch({ type: 'SET_FAIL_MESSAGE', payload: e.target.value })}
+                                            />
                                         </Form.Field>
                                         <Container textAlign='center'>
                                             <Button primary icon="plus" onClick={handleSubmit}>Done</Button>

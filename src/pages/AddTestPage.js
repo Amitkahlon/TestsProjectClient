@@ -11,7 +11,9 @@ const initialState = {
     description: '',
     passGrade: -1,
     showCorrectAnswers: false,
-    questions: []
+    questions: [],
+    passMessage: '',
+    failMessage: ''
 }
 
 const AddTestPage = (props) => {
@@ -24,21 +26,21 @@ const AddTestPage = (props) => {
     useEffect(() => {
         serverAccess.get('/api/questions').then(res => setQuestions(res.data)).catch(err => console.log(err))
     }, [setQuestions])
-    
+
     useEffect(() => {
-        dispatch({type: 'SET_QUESTIONS', payload: selectedQuestions})
+        dispatch({ type: 'SET_QUESTIONS', payload: selectedQuestions })
     }, [selectedQuestions])
 
     const handleSelectQuestion = (qts) => {
         setSelectedQuestions(qts)
     }
-    
+
     const handleSubmit = async () => {
         const res = await serverAccess.post('/api/tests', { test })
         if (res.data.error) {
             setErrors(res.data.error)
         }
-        else if(res.data.test){
+        else if (res.data.test) {
             history.push('/tests')
         }
     }
@@ -92,6 +94,22 @@ const AddTestPage = (props) => {
                                     <div className="questions-table">
                                         <NewTestQuestionsList questions={questions} handleSelectQuestion={handleSelectQuestion} />
                                     </div>
+                                </Form.Field>
+                                <Form.Field>
+                                    <Form.Input
+                                        label='Text for the user in case of passing the test:'
+                                        type='text'
+                                        control={TextArea}
+                                        onChange={(e) => dispatch({ type: 'SET_PASS_MESSAGE', payload: e.target.value })}
+                                    />
+                                </Form.Field>
+                                <Form.Field>
+                                    <Form.Input
+                                        label='Text for the user in case of failing the test:'
+                                        type='text'
+                                        control={TextArea}
+                                        onChange={(e) => dispatch({ type: 'SET_FAIL_MESSAGE', payload: e.target.value })}
+                                    />
                                 </Form.Field>
                                 <Container textAlign='center'>
                                     <Button primary icon="plus" onClick={handleSubmit}>Add new test</Button>

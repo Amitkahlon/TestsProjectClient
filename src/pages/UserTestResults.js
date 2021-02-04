@@ -30,7 +30,7 @@ const UserTestResults = () => {
                         success={user.exam.grade > user.test.passGrade}
                         error={user.exam.grade <= user.test.passGrade}
                     >
-                        {user.exam.grade > user.test.passGrade ? 'Well done!' : 'Better luck next time!'}
+                        {user.exam.grade > user.test.passGrade ? user.test.passMessage : user.test.failMessage}
                     </Message>
                     {user.test.showCorrectAnswers && 
                         <>

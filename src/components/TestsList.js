@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Table, Icon, Button, Message, Input } from 'semantic-ui-react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { Table, Icon, Button, Message, Input, Popup } from 'semantic-ui-react';
 import { ContextValues } from '../context/AppContext';
 import serverAccess from '../api/serverAccess'
 import { Link } from 'react-router-dom';
@@ -10,6 +10,7 @@ const TestsList = ({ tests, setTests }) => {
     const [errorMessage, setErrorMessage] = useState(null)
     const [search, setSearch] = useState('')
     const [filteredTests, setFilteredTests] = useState(tests)
+    const urlInput = useRef()
 
     useEffect(() => {
         setFilteredTests(tests)
@@ -35,6 +36,36 @@ const TestsList = ({ tests, setTests }) => {
         }
     }
 
+    const formatDate = (date) => {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear(),
+            hours = d.getHours(),
+            minutes = d.getMinutes();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+        return [year, month, day].join('-') + ' ' + [hours, minutes].join(':');
+    }
+
+    const getTestUrl = (id) => {
+        let hostname = ''
+        if(process.env.NODE_ENV === 'development'){
+            hostname = `${window.location.host}`
+        }else{
+            hostname = `${window.location.hostname}`
+        }
+        let url = `${window.location.protocol}//${hostname}/sign/${id}`;
+        return url;
+    }
+
+    const handleCopyPopup = () => {
+        navigator.clipboard.writeText(urlInput.current.value)
+    }
+
     let tableContent = !tests.message ? <>
         {filteredTests.map(test => (
             <Table.Row>
@@ -46,6 +77,9 @@ const TestsList = ({ tests, setTests }) => {
                 <Table.Cell>{test.showCorrectAnswers ? 'Yes' : 'No'}</Table.Cell>
                 <Table.Cell collapsing textAlign='center'>
                     {test.questions.length}
+                </Table.Cell>
+                <Table.Cell>
+                    {formatDate(test.modifiedAt)}
                 </Table.Cell>
                 <Table.Cell textAlign='center'>
                     <div className='line testbtns'>
@@ -65,7 +99,15 @@ const TestsList = ({ tests, setTests }) => {
                             trigger={<Button size="mini" color="red">
                                 <Icon name='delete' />
                                 Delete
-                                </Button>} />
+                                </Button>}
+                        />
+                        <Popup
+                            trigger={<Button size='mini'>Copy Link</Button>}
+                            content='Copied!'
+                            on='click'
+                            onOpen={handleCopyPopup}
+                        />
+                        <input value={getTestUrl(test._id)} hidden ref={urlInput}/>
                     </div>
                 </Table.Cell>
             </Table.Row>
@@ -89,7 +131,7 @@ const TestsList = ({ tests, setTests }) => {
             <Table celled striped>
                 <Table.Header>
                     <Table.Row>
-                        <Table.HeaderCell colSpan='6'>{admin.field.title} Tests list</Table.HeaderCell>
+                        <Table.HeaderCell colSpan='7'>{admin.field.title} Tests list</Table.HeaderCell>
                     </Table.Row>
                     <Table.Row>
                         <Table.HeaderCell>Title</Table.HeaderCell>
@@ -97,6 +139,7 @@ const TestsList = ({ tests, setTests }) => {
                         <Table.HeaderCell>Pass grade</Table.HeaderCell>
                         <Table.HeaderCell>Show correct answers</Table.HeaderCell>
                         <Table.HeaderCell>Questions</Table.HeaderCell>
+                        <Table.HeaderCell>Last change</Table.HeaderCell>
                         <Table.HeaderCell>Actions</Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>
