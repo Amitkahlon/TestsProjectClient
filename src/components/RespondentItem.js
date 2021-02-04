@@ -1,15 +1,41 @@
-import React from 'react'
-import { Table, Button, Icon } from 'semantic-ui-react'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom';
+import { Table, Button, Icon, Header } from 'semantic-ui-react'
+import RespondentItemExtra from './RespondentItemExtra'
 
 const RespondentItem = ({ item }) => {
+    const [showExtra, setShowExtra] = useState(false);
+    const displayExtra = () => showExtra ? '' : 'none'
+
+    const getAnsweredQuestionsCount = () => {
+        let count = 0;
+        item.questions.forEach(question => {
+            if (question.answer.length > 0) count++;
+        });
+
+        return count
+    }
+
+    // /reports/exam/
+
     return (
-        <Table.Row>
-            <Table.Cell>{item._id}</Table.Cell>
-            <Table.Cell>{item.name}</Table.Cell>
-            <Table.Cell>{item.submitDate}</Table.Cell>
-            <Table.Cell>{item.questionsAnswerCount}</Table.Cell>
-            <Table.Cell>{item.grade}</Table.Cell>
-        </Table.Row>
+        <>
+            <Table.Row onClick={() => setShowExtra(!showExtra)}>
+                <Table.Cell>{item._id}</Table.Cell>
+                <Table.Cell>{`${item.studentFirstName}  ${item.studentLastName}`}</Table.Cell>
+                <Table.Cell>{item.createdAt}</Table.Cell>
+                <Table.Cell>{getAnsweredQuestionsCount()}</Table.Cell>
+                <Table.Cell>{item.grade}</Table.Cell>
+            </Table.Row>
+            <Table.Row style={{ display: displayExtra() }}>
+                <Table.HeaderCell colSpan='5' style={{ backgroundColor: '' }}>
+                    <RespondentItemExtra data={item} />
+                    <Link to={`/reports/exam/${item._id}`}>
+                        <Button>dsadas</Button>
+                    </Link>
+                </Table.HeaderCell>
+            </Table.Row>
+        </>
     )
 }
 

@@ -37,7 +37,8 @@ const UserFormPage = () => {
                             question:{
                                 title: q.title,
                                 answers: q.answers,
-                                questionType: q.questionType
+                                questionType: q.questionType,
+                                questionId: q._id
                             }
                         })
                     })

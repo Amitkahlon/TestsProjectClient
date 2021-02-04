@@ -3,43 +3,44 @@ import React from 'react'
 import { Container, Header, Label, Select, List, Checkbox, Button, Table, TableHeader } from 'semantic-ui-react';
 
 function ReportSummary({ summary }) {
-
     return (
         <Container className="segment">
             <Header as="h3">Summary</Header>
             <Table>
-                <TableHeader></TableHeader>
-                <TableHeader></TableHeader>
+                <Table.Header>
+                </Table.Header>
 
-                <Table.Row>
-                    <Table.Cell>Test name: {summary.testName}</Table.Cell>
-                    <Table.Cell>Date Range: {`${summary.fromDate} - ${summary.toDate}`}</Table.Cell>
-                </Table.Row>
+                <Table.Body>
+                    <Table.Row>
+                        <Table.Cell>Test Name: <b>{summary.testName}</b></Table.Cell>
+                        <Table.Cell>Date Range: <b>{`${summary.fromDate} - ${summary.toDate}`}</b></Table.Cell>
+                    </Table.Row>
 
-                <Table.Row>
-                    <Table.Cell>Test Code: Not Avalivable</Table.Cell>
-                    <Table.Cell>Number of submissions: {summary.submissionsCount}</Table.Cell>
-                </Table.Row>
+                    <Table.Row>
+                        <Table.Cell>Test Code: <b>Not Avalivable</b></Table.Cell>
+                        <Table.Cell>Number Of Submissions: <b>{summary.submissionsCount}</b></Table.Cell>
+                    </Table.Row>
 
-                <Table.Row>
-                    <Table.Cell>Test id: {summary.testId}</Table.Cell>
-                    <Table.Cell>Number of respondent passed: {summary.respondentPassed}</Table.Cell>
-                </Table.Row>
+                    <Table.Row>
+                        <Table.Cell>Test Id: <b>{summary.testId}</b></Table.Cell>
+                        <Table.Cell>Number Of Respondent Passed: <b>{summary.respondentPassed}</b></Table.Cell>
+                    </Table.Row>
 
-                <Table.Row>
-                    <Table.Cell>Test type: {summary.testType}</Table.Cell>
-                    <Table.Cell>Passing percentage: {`${summary.PassingPrecentage}%`}</Table.Cell>
-                </Table.Row>
+                    <Table.Row>
+                        <Table.Cell>Test Type:<b>Not Avaliable</b> </Table.Cell>
+                        <Table.Cell>Passing Percentage: <b>{`${summary.PassingPrecentage}%`}</b></Table.Cell>
+                    </Table.Row>
 
-                <Table.Row>
-                    <Table.Cell>Number of questions: {summary.questionsCount}</Table.Cell>
-                    <Table.Cell>Number of average grade: {summary.averageGrade}</Table.Cell>
-                </Table.Row>
+                    <Table.Row>
+                        <Table.Cell>Number Of Questions: <b>{summary.questionsCount}</b></Table.Cell>
+                        <Table.Cell>Number Of Average Grade: <b>{summary.averageGrade}</b></Table.Cell>
+                    </Table.Row>
 
-                <Table.Row>
-                    <Table.Cell>Passing grade: {summary.passingGrade}</Table.Cell>
-                    <Table.Cell>Median grade: {summary.medianGrade}</Table.Cell>
-                </Table.Row>
+                    <Table.Row>
+                        <Table.Cell>Passing Grade: <b>{summary.passingGrade}</b></Table.Cell>
+                        <Table.Cell>Median Grade: <b>{summary.medianGrade}</b></Table.Cell>
+                    </Table.Row>
+                </Table.Body>
             </Table>
         </Container>
     )

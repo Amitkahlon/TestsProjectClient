@@ -18,8 +18,8 @@ const StudentReportDetails = ({ item }) => {
 
             <TableBody>
                 <Table.Row>
-                    <Table.Cell>{item._id}</Table.Cell>
-                    <Table.Cell>{item.name}</Table.Cell>
+                    <Table.Cell>{item.id}</Table.Cell>
+                    <Table.Cell>{`${item.firstName} ${item.lastName}`}</Table.Cell>
                     <Table.Cell>{item.email}</Table.Cell>
                     <Table.Cell>{item.lastActivity}</Table.Cell>
                 </Table.Row>
