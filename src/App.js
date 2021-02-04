@@ -19,6 +19,7 @@ import ReportsPage from './pages/ReportsPage';
 import TestReportsPage from './pages/TestReportsPage';
 import StudentReportsPage from './pages/StudentReportsPage';
 import UserTestResults from './pages/UserTestResults';
+import ExamReportPage from './pages/ExamReportPage';
 
 function App() {
   const { token, setToken, setAdmin, user } = useContext(ContextValues)
@@ -84,16 +85,16 @@ function App() {
           return <EditTestPage />
         }}
       />
-      <Route exact path="/sign/:id" component={UserFormPage}/>
+      <Route exact path="/sign/:id" component={UserFormPage} />
       <Route exact path="/test"
         render={() => {
-          if(!user) return <Redirect to='/'/>
+          if (!user) return <Redirect to='/' />
           return <UserTestPage />
         }}
       />
       <Route exact path="/test/results"
         render={() => {
-          if(!user || user.exam.grade < 0) return <Redirect to='/'/>
+          if (!user || user.exam.grade < 0) return <Redirect to='/' />
           return <UserTestResults />
         }}
       />
@@ -113,6 +114,12 @@ function App() {
         render={() => {
           if (!token) return <Redirect to='/login' />
           return <StudentReportsPage />
+        }}
+      />
+      <Route exact path="/reports/exam/:id"
+        render={(props) => {
+          if (!token) return <Redirect to='/login' />
+          return <ExamReportPage {...props} />
         }}
       />
     </Router>

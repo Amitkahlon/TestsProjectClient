@@ -22,6 +22,11 @@ const testReportFormReducer = (state, action) => {
             newState.tests = payload.tests;
             break;
         }
+        case "SET_TESTID": {
+            const { payload }  = action;
+            newState.testId = payload.testId;
+            break;
+        }
         default: break;
     }
 

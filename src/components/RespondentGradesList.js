@@ -2,21 +2,7 @@ import React, { useState } from 'react'
 import { Container, Header, Label, Select, List, Checkbox, Button, Table, TableBody } from 'semantic-ui-react';
 import RespondentItem from './RespondentItem';
 
-const initalRespondent = [
-    { _id: "d", name: "Bart Simpson", submitDate: "1/1/2020", questionsAnswerCount: 15, grade: 75 },
-    { _id: "dsadas1234", name: "Bart Simpson", submitDate: "1/1/2020", questionsAnswerCount: 15, grade: 75 },
-    { _id: "dsadas1234", name: "Bart Simpson", submitDate: "1/1/2020", questionsAnswerCount: 15, grade: 75 },
-    { _id: "dsadas1234", name: "Bart Simpson", submitDate: "1/1/2020", questionsAnswerCount: 15, grade: 75 },
-    { _id: "dsadas1234", name: "Bart Simpson", submitDate: "1/1/2020", questionsAnswerCount: 15, grade: 75 },
-    { _id: "dsadas1234", name: "Bart Simpson", submitDate: "1/1/2020", questionsAnswerCount: 15, grade: 75 },
-    { _id: "dsadas1234", name: "Bart Simpson", submitDate: "1/1/2020", questionsAnswerCount: 15, grade: 75 },
-    { _id: "dsadas1234", name: "Bart Simpson", submitDate: "1/1/2020", questionsAnswerCount: 15, grade: 75 },
-
-]
-
-function RespondentGradesList() {
-const [respondent, setRespondent] = useState(initalRespondent)
-
+function RespondentGradesList({ respondents }) {
     return (
         <Table celled striped selectable>
             <Table.Header>
@@ -29,13 +15,13 @@ const [respondent, setRespondent] = useState(initalRespondent)
                 </Table.Row>
             </Table.Header>
 
-            <TableBody>
+            <Table.Body>
                 {
-                    respondent.map(respondent =>
+                    respondents.map(respondent =>
                         <RespondentItem item={respondent} key={respondent._id} />
                     )
                 }
-            </TableBody>
+            </Table.Body>
         </Table>
     )
 }

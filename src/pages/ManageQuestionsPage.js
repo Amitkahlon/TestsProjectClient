@@ -24,7 +24,6 @@ const ManageQuestionsPage = () => {
             document.title = `Tests Manager`;
             clearTimeout(timeoutRef.current)
         }
-
     }, []);
 
     const getQuestions = () => {
@@ -70,10 +69,8 @@ const ManageQuestionsPage = () => {
                 results: filtedQuestions,
             })
 
-        }, 300)
+        }, 300)}
 
-
-    }
     return (
         <div>
             <Header style={styles.header}>Manage Questions</Header>
