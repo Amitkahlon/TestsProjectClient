@@ -5,7 +5,6 @@ const RespondentItemExtra = ({ data }) => {
     return (
         <Table>
             <Table.Header>
-
             </Table.Header>
 
             <Table.Body>

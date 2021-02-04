@@ -19,7 +19,7 @@ const AnswerDetails = ({ correctAnswers, incorrectAnswers, answerChoosen }) => {
         return 0;
     })
 
-    const answerItem = (answer) => {
+    const answerItem = (answer, i) => {
         let fontColor = "black";
         let iconName = "";
 
@@ -37,7 +37,7 @@ const AnswerDetails = ({ correctAnswers, incorrectAnswers, answerChoosen }) => {
         } 
 
         return (
-            <div style={{ marginBottom: 5 }}>
+            <div style={{ marginBottom: 5 }} key={i}>
                 <span style={{ color: fontColor, fontWeight: "normal", marginRight: 10 }}>{answer.text}</span>
                 <Icon name={iconName} />
             </div>
@@ -49,8 +49,8 @@ const AnswerDetails = ({ correctAnswers, incorrectAnswers, answerChoosen }) => {
             <Header as="h4">Answers</Header>
             <List>
                 {
-                    answers.map((answer) => {
-                        return answerItem(answer);
+                    answers.map((answer, i) => {
+                        return answerItem(answer, i);
                     })
                 }
             </List>

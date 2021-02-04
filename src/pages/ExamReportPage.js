@@ -33,8 +33,10 @@ const ExamReportPage = (props) => {
             params: {
                 examId: id
             }
-        }).then(res => {
-            setReport(res.data.report);
+        }).then(({ data }) => {
+            if(data.report){
+                setReport(data.report);
+            }
         })
     }, []);
 
