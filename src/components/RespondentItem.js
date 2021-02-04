@@ -31,7 +31,7 @@ const RespondentItem = ({ item }) => {
                 <Table.HeaderCell colSpan='5' style={{ backgroundColor: '' }}>
                     <RespondentItemExtra data={item} />
                     <Link to={`/reports/exam/${item._id}`}>
-                        <Button>dsadas</Button>
+                        <Button>Go To Exam Report</Button>
                     </Link>
                 </Table.HeaderCell>
             </Table.Row>
