@@ -11,7 +11,9 @@ const initialState = {
     description: '',
     passGrade: -1,
     showCorrectAnswers: false,
-    questions: []
+    questions: [],
+    passMessage: '',
+    failMessage: ''
 }
 
 const AddTestPage = (props) => {
@@ -101,6 +103,22 @@ const AddTestPage = (props) => {
                                     <div className="questions-table">
                                         <NewTestQuestionsList questions={questions} handleSelectQuestion={handleSelectQuestion} />
                                     </div>
+                                </Form.Field>
+                                <Form.Field>
+                                    <Form.Input
+                                        label='Text for the user in case of passing the test:'
+                                        type='text'
+                                        control={TextArea}
+                                        onChange={(e) => dispatch({ type: 'SET_PASS_MESSAGE', payload: e.target.value })}
+                                    />
+                                </Form.Field>
+                                <Form.Field>
+                                    <Form.Input
+                                        label='Text for the user in case of failing the test:'
+                                        type='text'
+                                        control={TextArea}
+                                        onChange={(e) => dispatch({ type: 'SET_FAIL_MESSAGE', payload: e.target.value })}
+                                    />
                                 </Form.Field>
                                 <Container textAlign='center'>
                                     <Button primary icon="plus" onClick={handleSubmit}>Add new test</Button>

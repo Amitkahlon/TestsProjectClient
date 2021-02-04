@@ -10,6 +10,10 @@ const testReducer = (state, action) => {
             return {...state, showCorrectAnswers: action.payload}
         case 'SET_QUESTIONS':
             return {...state, questions: action.payload}
+        case 'SET_PASS_MESSAGE':
+            return {...state, passMessage: action.payload}
+        case 'SET_FAIL_MESSAGE':
+            return {...state, failMessage: action.payload}
         default:
             return state;
     }
