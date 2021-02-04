@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Table, Icon, Button, Message, Input, Popup } from 'semantic-ui-react';
 import { ContextValues } from '../context/AppContext';
+import DeleteModal from './controls/DeleteModal';
 import serverAccess from '../api/serverAccess'
 import { Link } from 'react-router-dom';
-import DeleteModal from '../components/controls/DeleteModal';
 
 const TestsList = ({ tests, setTests }) => {
     const { admin } = useContext(ContextValues)
