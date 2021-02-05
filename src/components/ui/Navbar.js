@@ -1,12 +1,23 @@
 import React, { useState } from 'react';
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { Menu } from 'semantic-ui-react';
+import { Link, useHistory } from 'react-router-dom';
+import { Button, Menu } from 'semantic-ui-react';
+import serverAccess from '../../api/serverAccess';
 import { ContextValues } from '../../context/AppContext';
 
 const Navbar = () => {
-    const { token, admin } = useContext(ContextValues)
+    const { token, admin, setAdmin, setToken } = useContext(ContextValues)
     const [activeItem, setActiveItem] = useState('')
+    const history = useHistory()
+
+    const handleLogout = () => {
+        setAdmin(null)
+        setToken(null)
+        localStorage.removeItem('token');
+        serverAccess.defaults.headers.common['x-auth-token'] = '';
+        history.push('/')
+    }
+
     return (
         <Menu stackable pointing secondary>
             <Link to='/'>
@@ -38,6 +49,7 @@ const Navbar = () => {
                     {admin.organization ? <Menu.Item>
                         {admin.organization.name}
                     </Menu.Item> : <></>}
+                    <Button size='tiny' basic color='red' circular style={{margin: '4px 3px 4px 0px'}} onClick={handleLogout}>Logout</Button>
                 </Menu.Menu>
                 :
                 <></>
