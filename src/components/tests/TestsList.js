@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Table, Icon, Button, Message, Input, Popup } from 'semantic-ui-react';
 import { ContextValues } from '../../context/AppContext';
 import DeleteModal from '../controls/DeleteModal';
@@ -10,7 +10,6 @@ const TestsList = ({ tests, setTests }) => {
     const [errorMessage, setErrorMessage] = useState(null)
     const [search, setSearch] = useState('')
     const [filteredTests, setFilteredTests] = useState(tests)
-    const urlInput = useRef()
 
     useEffect(() => {
         setFilteredTests(tests)
@@ -62,8 +61,8 @@ const TestsList = ({ tests, setTests }) => {
         return url;
     }
 
-    const handleCopyPopup = () => {
-        navigator.clipboard.writeText(urlInput.current.value)
+    const handleCopyPopup = (id) => {
+        navigator.clipboard.writeText(getTestUrl(id))
     }
 
     let tableContent = !tests.message ? <>
@@ -105,9 +104,8 @@ const TestsList = ({ tests, setTests }) => {
                             trigger={<Button size='mini'>Copy Link</Button>}
                             content='Copied!'
                             on='click'
-                            onOpen={handleCopyPopup}
+                            onOpen={() => handleCopyPopup(test._id)}
                         />
-                        <input value={getTestUrl(test._id)} hidden ref={urlInput}/>
                     </div>
                 </Table.Cell>
             </Table.Row>
