@@ -18,7 +18,7 @@ const QuestionStatisticsItem = ({ item }) => {
 
     return (
         <>
-            <Table.Row onClick={() => setShowAnswers(!showAnswers)}>
+            <Table.Row onClick={() => setShowAnswers(!showAnswers)} className="pointer">
                 <Table.Cell>{item.questionId}</Table.Cell>
                 <Table.Cell>{item.questionTitle}</Table.Cell>
                 <Table.Cell>{item.numberOfSubmissions}</Table.Cell>

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Table, TableBody } from 'semantic-ui-react'
-import StudentReportItem from './StudentReportItem'
+import StudentReportItem from './StudentReportItem';
+import '../../styles/MouseHover.css';
 
 const StudentTestsReportList = ({ exams }) => {
     return (
@@ -18,7 +19,7 @@ const StudentTestsReportList = ({ exams }) => {
             <TableBody>
                 {
                     exams.map((exam) =>
-                        <StudentReportItem item={exam} key={exam._id} />
+                        <StudentReportItem className="pointer" item={exam} key={exam._id} />
                     )
                 }
             </TableBody>

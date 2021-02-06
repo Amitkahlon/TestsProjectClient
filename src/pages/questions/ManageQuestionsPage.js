@@ -73,7 +73,8 @@ const ManageQuestionsPage = () => {
 
     return (
         <div>
-            <Header style={styles.header}>Manage Questions</Header>
+            <Header as="h1" style={styles.header}>Manage Questions</Header>
+            <p>Hover on a title or substitle to see its full text, you can search in the search bar a queestion by title</p>
             <Search
                 loading={loading}
                 onResultSelect={(e, data) => {

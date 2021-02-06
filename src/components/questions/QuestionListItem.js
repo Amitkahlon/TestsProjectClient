@@ -2,23 +2,26 @@ import React from "react";
 import { Table, Button, Icon } from 'semantic-ui-react'
 import DeleteModal from "../controls/DeleteModal";
 import { Link } from 'react-router-dom';
-
-
+import '../../styles/MouseHover.css';
 
 const QuestionListItem = ({ item, deleteAction }) => {
+  const maxLength = 15
 
+  const isExeededMaxLength = (text) => {
+    return text.length >= maxLength;
+  }
   return (
     <Table.Row>
-      <Table.Cell>{item.title}</Table.Cell>
-      <Table.Cell>{item.subTitle}</Table.Cell>
+      <Table.Cell className="help" title={item.title}>{`${item.title.substring(0, maxLength)}`} {isExeededMaxLength(item.title) ? '...' : null}</Table.Cell>
+      <Table.Cell className="help" title={item.subTitle}>{`${item.subTitle.substring(0, maxLength)}`} {isExeededMaxLength(item.subTitle) ? '...' : null}</Table.Cell>
       <Table.Cell>{item.questionType}</Table.Cell>
       <Table.Cell>{item.answersDisplay}</Table.Cell>
       <Table.Cell>{item.tags.join(', ')}</Table.Cell>
       <Table.Cell>{item.correctAnswers.length + item.incorrectAnswers.length}</Table.Cell>
-      <Table.Cell>10/10/2020 placeholder</Table.Cell>
+      <Table.Cell>{item.LastEdited}</Table.Cell>
 
       <Table.Cell>
-        <Link to={{
+        <Link target="_blank" to={{
           pathname: "/questions/view",
           state: {
             question: item

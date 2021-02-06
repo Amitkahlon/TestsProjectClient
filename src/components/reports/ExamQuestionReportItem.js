@@ -9,11 +9,10 @@ const ExamQuestionReportItem = ({ item }) => {
 
     return (
         <>
-            <Table.Row onClick={() => setShowAnswers(!showAnswers)}>
+            <Table.Row onClick={() => setShowAnswers(!showAnswers)} className="pointer">
                 <Table.Cell>{item.questionId}</Table.Cell>
                 <Table.Cell>{item.questionTitle}</Table.Cell>
                 <Table.Cell>{item.answeredCorrectly ? 'Correct' : 'Wrong'}</Table.Cell>
-                <Table.Cell>Date</Table.Cell>
             </Table.Row>
             <Table.Row style={{ display: displayAnswers() }}>
                 <Table.HeaderCell colSpan='5' style={{ backgroundColor: '' }}>

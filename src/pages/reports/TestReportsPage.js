@@ -5,10 +5,18 @@ import TestReport from '../../components/reports/TestReport';
 import testReportFormReducer from "../../reducers/testReportFormReducer";
 import serverAccess from "../../api/serverAccess";
 
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+var yyyy = today.getFullYear();
+
+today = yyyy + '-' + mm + '-' + dd;
+
+
 const initialForm = {
     tests: [],
-    toDate: "2020-01-29",
-    fromDate: "2020-01-29",
+    toDate: today,
+    fromDate: today,
     anyDate: false,
     testId: ""
 }
@@ -36,8 +44,6 @@ const TestReportsPage = () => {
     const [formState, formDispatch] = useReducer(testReportFormReducer, initialForm);
     const [showReport, setShowReport] = useState(false);
     const [reportData, setReportData] = useState(initialData);
-
-
 
     const submitForm = () => {
         if (formState.anyDate) {
