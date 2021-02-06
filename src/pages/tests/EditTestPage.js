@@ -1,12 +1,13 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { Button, Checkbox, Container, Form, Grid, Header, Message, Segment, TextArea } from 'semantic-ui-react';
+import { Button, Checkbox, Container, Dropdown, Form, Grid, Header, Message, Segment, TextArea } from 'semantic-ui-react';
 import serverAccess from '../../api/serverAccess';
 import NewTestQuestionsList from '../../components/tests/NewTestQuestionsList';
 import testReducer from '../../reducers/addTestReducer';
 
 const EditTestPage = () => {
     const [questions, setQuestions] = useState([])
+    const [selectedLanguage, setSelectedLanguage] = useState('')
     const location = useLocation()
     const history = useHistory()
     const initialState = {
@@ -23,13 +24,18 @@ const EditTestPage = () => {
     const [selectedQuestions, setSelectedQuestions] = useState(test.questions)
     useEffect(() => {
         serverAccess.get('/api/questions')
-        .then(({ data }) => setQuestions(data.questions))
-        .catch(err => setErrors(err))
+            .then(({ data }) => setQuestions(data.questions))
+            .catch(err => setErrors(err))
     }, [setQuestions])
 
     useEffect(() => {
         dispatch({ type: 'SET_QUESTIONS', payload: selectedQuestions })
     }, [selectedQuestions])
+
+    useEffect(() => {
+        dispatch({ type: 'SET_LANGUAGE', payload: selectedLanguage })
+    }, [selectedLanguage])
+
 
     const handleSelectQuestion = (qts) => {
         setSelectedQuestions(qts)
@@ -45,6 +51,12 @@ const EditTestPage = () => {
             }
         }
     }
+
+    let langOptions = [
+        { text: 'English', value: 'en' },
+        { text: 'Hebrew', value: 'he' }
+    ]
+
     return (
         <>
             {test &&
@@ -87,6 +99,20 @@ const EditTestPage = () => {
                                                 style={{ width: '20%' }}
                                                 value={test.passGrade}
                                                 onChange={(e) => dispatch({ type: 'SET_PASS_GRADE', payload: e.target.value })}
+                                            />
+                                        </Form.Field>
+                                        <Form.Field>
+                                            <Form.Input
+                                                label='Test language:'
+                                                control={Dropdown}
+                                                selection
+                                                placeholder='Language'
+                                                options={langOptions}
+                                                value={selectedLanguage}
+                                                onChange={(e, { value }) => {
+                                                    setSelectedLanguage(value)
+                                                }}
+                                                style={{ width: '30%' }}
                                             />
                                         </Form.Field>
                                         <Form.Field>

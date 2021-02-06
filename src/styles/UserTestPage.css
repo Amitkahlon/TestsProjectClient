@@ -16,3 +16,18 @@
     display: flex;
     justify-content: space-evenly;
 }
+
+.question{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.hebrew{
+    justify-content: right;
+}
+
+.english{
+    justify-content: left;
+    flex-direction: row-reverse;
+}

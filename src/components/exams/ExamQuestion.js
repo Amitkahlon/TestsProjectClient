@@ -6,6 +6,7 @@ import Question from '../questions/Question';
 
 const ExamQuestion = ({ question, setAnswer, questionNumber }) => {
     const { user } = useContext(ContextValues)
+    const [selectedAnswer, setSelectedAnswer] = useState([])
     const [selectedAnswer, setSelectedAnswer] = useState([]);
 
     useEffect(() => {

@@ -79,7 +79,7 @@ const UserTestPage = () => {
             </div>
         </>
     return (
-        <div>
+        <div style={{marginTop: '1rem'}}>
             <Grid columns={3}>
                 <Grid.Column width={5} />
                 <Grid.Column width={6}>
