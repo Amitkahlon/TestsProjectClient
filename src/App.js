@@ -20,6 +20,7 @@ import TestReportsPage from './pages/reports/TestReportsPage';
 import StudentReportsPage from './pages/reports/StudentReportsPage';
 import UserTestResults from './pages/ui/UserTestResults';
 import ExamReportPage from './pages/reports/ExamReportPage';
+import FieldsPage from './pages/fields/FieldsPage';
 
 function App() {
   const { token, setToken, setAdmin, user } = useContext(ContextValues)
@@ -120,6 +121,12 @@ function App() {
         render={(props) => {
           if (!token) return <Redirect to='/login' />
           return <ExamReportPage {...props} />
+        }}
+      />
+      <Route exact path='/fields'
+        render={() => {
+          if(!token) return <Redirect to='/login' />
+          return <FieldsPage />
         }}
       />
     </Router>

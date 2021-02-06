@@ -32,6 +32,9 @@ const AdminMenu = () => {
                         serverAccess.defaults.headers.common['x-field'] = value;
                     }}
                 />
+                <Link to="/fields">
+                    <Button primary>Manage fields</Button>
+                </Link>
                 {selectedField ? <>
                     <Link to="/tests">
                         <Button primary>Manage Tests</Button>
@@ -39,9 +42,9 @@ const AdminMenu = () => {
                     <Link to="/questions">
                         <Button primary>Manage Questions</Button>
                     </Link>
-                    <Link to="/organizations">
+                    {/* <Link to="/organizations">
                         <Button primary>Manage Organizations</Button>
-                    </Link>
+                    </Link> */}
                     <Link to="/reports">
                         <Button primary>Reports</Button>
                     </Link>
