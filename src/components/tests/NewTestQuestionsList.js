@@ -1,15 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Checkbox, Dropdown, Icon, Input, Label, Table } from 'semantic-ui-react';
 import DetailedQuestionModal from '../controls/DetailedQuestionModal';
+import '../../styles/TestQuestionsList.css';
 
 const NewTestQuestionsList = ({ questions, handleSelectQuestion, editQts=[] }) => {
     const [filteredQuestions, setFilteredQuestions] = useState([])
     const [search, setSearch] = useState('')
     const [selectedQuestions, setSelectedQuestions] = useState(editQts)
     const [selectedSearchOption, setSelectedSearchOption] = useState('')
+    const [selectAll, setSelectAll] = useState(false)
+
     useEffect(() => {
         setFilteredQuestions(questions)
     }, [questions])
+
+    useEffect(() => {
+        if(selectAll){
+            let qts = []
+            questions.forEach(q => qts.push(q._id))
+            setSelectedQuestions(qts)
+            handleSelectQuestion(selectedQuestions)
+        }else{
+            setSelectedQuestions([])
+        }
+    }, [selectAll, questions, selectedQuestions, handleSelectQuestion])
 
     useEffect(() => {
         handleSelectQuestion(selectedQuestions)
@@ -71,7 +85,7 @@ const NewTestQuestionsList = ({ questions, handleSelectQuestion, editQts=[] }) =
         {filteredQuestions.map((question) => (
             <Table.Row style={{backgroundColor: selectedQuestions.find(q => q === question._id)? 'lightgreen':''}}>
                 <Table.Cell textAlign='center'>
-                    <Checkbox checked={selectedQuestions.find(q => q === question._id)} onChange={() => handleCheckQuestion(question._id)} />
+                    <Checkbox checked={selectedQuestions.length > 0 && selectedQuestions.find(q => q === question._id)} onChange={() => handleCheckQuestion(question._id)} />
                 </Table.Cell>
                 <Table.Cell>{question.title}</Table.Cell>
                 <Table.Cell>{question.correctAnswers.length + question.incorrectAnswers.length}</Table.Cell>
@@ -115,8 +129,13 @@ const NewTestQuestionsList = ({ questions, handleSelectQuestion, editQts=[] }) =
                     }}
                 />
             </div>
-            <div style={{marginTop: '3px'}}>
+            <div className='select-questions'>
                 <label>Selected questions: {selectedQuestions.length}</label>
+                <Checkbox 
+                    label='Select All'
+                    checked={selectAll}
+                    onChange={() => setSelectAll(!selectAll)}
+                />
             </div>
             <Table celled>
                 <Table.Header>
