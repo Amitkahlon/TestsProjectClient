@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer, useState } from 'react';
-import { Button, Container, Form, Grid, Header, Segment, TextArea, Checkbox, Message } from 'semantic-ui-react';
+import { Button, Container, Form, Grid, Header, Segment, TextArea, Checkbox, Message, Dropdown } from 'semantic-ui-react';
 import NewTestQuestionsList from '../../components/tests/NewTestQuestionsList';
 import '../../styles/AddTestPage.css';
 import serverAccess from '../../api/serverAccess';
@@ -21,7 +21,12 @@ const AddTestPage = () => {
     const [questions, setQuestions] = useState([])
     const [selectedQuestions, setSelectedQuestions] = useState([])
     const [errors, setErrors] = useState(null)
+    const [selectedLanguage, setSelectedLanguage] = useState('')
     const history = useHistory()
+
+    useEffect(() => {
+        dispatch({ type: 'SET_LANGUAGE', payload: selectedLanguage })
+    }, [selectedLanguage])
 
     useEffect(() => {
         serverAccess.get('/api/questions')
@@ -53,6 +58,11 @@ const AddTestPage = () => {
             history.push('/tests')
         }
     }
+
+    let langOptions = [
+        { text: 'English', value: 'en' },
+        { text: 'Hebrew', value: 'he' }
+    ]
 
     return (
         <Container textAlign='center'>
@@ -91,6 +101,20 @@ const AddTestPage = () => {
                                         type='text'
                                         style={{ width: '20%' }}
                                         onChange={(e) => dispatch({ type: 'SET_PASS_GRADE', payload: e.target.value })}
+                                    />
+                                </Form.Field>
+                                <Form.Field>
+                                    <Form.Input
+                                        label='Test language:'
+                                        control={Dropdown}
+                                        selection
+                                        placeholder='Language'
+                                        options={langOptions}
+                                        value={selectedLanguage}
+                                        onChange={(e, { value }) => {
+                                            setSelectedLanguage(value)
+                                        }}
+                                        style={{width: '30%'}}
                                     />
                                 </Form.Field>
                                 <Form.Field>

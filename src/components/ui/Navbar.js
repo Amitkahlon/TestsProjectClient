@@ -19,7 +19,7 @@ const Navbar = () => {
     }
 
     return (
-        <Menu stackable pointing secondary>
+        <Menu stackable pointing secondary style={{marginBottom: '0px'}}>
             <Link to='/'>
                 <Menu.Item as="a" name='logo' active={activeItem === 'logo'}
                     onClick={(e, { name }) => setActiveItem(name)}>

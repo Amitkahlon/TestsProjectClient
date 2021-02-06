@@ -4,13 +4,13 @@ import { ContextValues } from '../../context/AppContext';
 import '../../styles/UserTestPage.css'
 
 const ExamQuestion = ({ question, setAnswer, questionNumber }) => {
-    const {user} = useContext(ContextValues)
+    const { user } = useContext(ContextValues)
     const [selectedAnswer, setSelectedAnswer] = useState([])
 
     useEffect(() => {
-        if(user.exam.questions[questionNumber].answer && user.exam.questions[questionNumber].answer.length > 0){
+        if (user.exam.questions[questionNumber].answer && user.exam.questions[questionNumber].answer.length > 0) {
             setSelectedAnswer(user.exam.questions[questionNumber].answer)
-        }else{
+        } else {
             setSelectedAnswer([])
         }
     }, [user.exam.questions, questionNumber])
@@ -20,9 +20,9 @@ const ExamQuestion = ({ question, setAnswer, questionNumber }) => {
     }, [selectedAnswer, setAnswer])
 
     const handleSingleSelect = (e, { value }) => {
-        if(question.questionType === 'SingleChoiceQuestion'){
+        if (question.questionType === 'SingleChoiceQuestion') {
             setSelectedAnswer([value])
-        }else{
+        } else {
             if (selectedAnswer.includes(value)) {
                 setSelectedAnswer(selectedAnswer.filter(a => a !== value))
             }
@@ -34,7 +34,7 @@ const ExamQuestion = ({ question, setAnswer, questionNumber }) => {
 
     return (
         <Card fluid>
-            <Card.Content>
+            <Card.Content textAlign={user.test.language === 'he' ? 'right' : 'left'}>
                 <Card.Header>{question.title}</Card.Header>
                 <Card.Description>
                     {question.subTitle}
@@ -42,14 +42,15 @@ const ExamQuestion = ({ question, setAnswer, questionNumber }) => {
                 <div className={`questions ${question.answersDisplay}`}>
                     <Form>
                         {question.answers.map(a =>
-                            <Form.Field>
+                            <Form.Field className={user.test.language === 'he' ? 'question hebrew' : 'question english'}>
+                                <label>{a}</label>
                                 <Checkbox
                                     radio={question.questionType === 'SingleChoiceQuestion'}
                                     name="answersGroup"
-                                    label={a}
                                     value={a}
                                     checked={selectedAnswer.includes(a)}
                                     onChange={handleSingleSelect}
+                                    style={{margin: '3px'}}
                                 />
                             </Form.Field>
                         )}
