@@ -6,7 +6,7 @@ const StudentReportItem = ({ item }) => {
     const history = useHistory();
 
     return (
-        <Table.Row onClick={() => {
+        <Table.Row className="pointer" onClick={() => {
             history.push(`/reports/exam/${item._id}`)
         }}>
             <Table.Cell>{item._id}</Table.Cell>

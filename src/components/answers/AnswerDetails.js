@@ -19,6 +19,8 @@ const AnswerDetails = ({ correctAnswers, incorrectAnswers, answerChoosen }) => {
         return 0;
     })
 
+    console.log(answers)
+
     const answerItem = (answer, i) => {
         let fontColor = "black";
         let iconName = "";

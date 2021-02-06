@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { Table, Button } from 'semantic-ui-react'
-import RespondentItemExtra from './RespondentItemExtra'
+import RespondentItemExtra from './RespondentItemExtra';
+import '../../styles/MouseHover.css';
 
 const RespondentItem = ({ item }) => {
     const [showExtra, setShowExtra] = useState(false);
@@ -15,10 +16,10 @@ const RespondentItem = ({ item }) => {
 
         return count
     }
-    
+
     return (
         <>
-            <Table.Row onClick={() => setShowExtra(!showExtra)}>
+            <Table.Row onClick={() => setShowExtra(!showExtra)} className="pointer">
                 <Table.Cell>{item._id}</Table.Cell>
                 <Table.Cell>{`${item.studentFirstName}  ${item.studentLastName}`}</Table.Cell>
                 <Table.Cell>{item.createdAt}</Table.Cell>
