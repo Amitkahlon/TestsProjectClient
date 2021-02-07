@@ -21,13 +21,13 @@ const DetailedQuestionModal = ({ trigger, header, title, correctAnswers, incorre
                 <p color='green'>
                     <Icon name='plus' />
                     Correct answers:
-                    <div>{correctAnswers.map(a => <div>{a}</div>)}</div>
+                    <div>{correctAnswers.map((a, i) => <div key={i}>{a}</div>)}</div>
                 </p>
                 <Divider />
                 <p color='red'>
                     <Icon name='close' />
                     Incorrect answers:
-                    <div>{incorrectAnswers.map(a => <div>{a}</div>)}</div>
+                    <div>{incorrectAnswers.map((a, i) => <div key={i}>{a}</div>)}</div>
                 </p>
             </Modal.Content>
             <Modal.Actions>

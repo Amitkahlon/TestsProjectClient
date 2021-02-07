@@ -67,7 +67,7 @@ const TestsList = ({ tests, setTests }) => {
 
     let tableContent = !tests.message ? <>
         {filteredTests.map(test => (
-            <Table.Row>
+            <Table.Row key={test._id}>
                 <Table.Cell >
                     <Icon name='lab' /> {test.title.length > 30 ? test.title.substring(0, 30) + '...' : test.title}
                 </Table.Cell>

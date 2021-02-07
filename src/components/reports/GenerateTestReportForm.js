@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Button, List, Form, Label } from 'semantic-ui-react'
+import { Button, List, Form, Label } from 'semantic-ui-react';
 
 const GenerateTestReportForm = ({ form, formDispatch, submitForm, setShowReport }) => {
     return <Form className="centered segment" style={{ width: "80%" }}>
@@ -10,7 +10,7 @@ const GenerateTestReportForm = ({ form, formDispatch, submitForm, setShowReport 
                 <Form.Select options={form.tests} value={form.testId} onChange={(e, { value }) => {
                     setShowReport();
                     formDispatch({ type: "SET_TESTID", payload: { testId: value } })
-                }} placeholder="Test1" />
+                }} placeholder="Select Test From The Test List" />
             </List.Item>
             <List.Item>
                 <Label horizontal>From: </Label>

@@ -1,16 +1,39 @@
-import React, { useState } from 'react';
-import { Table, TableBody, Button, Icon } from 'semantic-ui-react'
+import React, { useState, useEffect } from 'react';
+import { Table, TableBody, Button, Icon, List } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
 import serverAccess from "../../api/serverAccess";
 import QuestionListItem from './QuestionListItem';
 import ProblemModal from '../controls/ProblemModal';
 import SuccessModal from '../controls/SuccessModal';
+import _ from 'lodash';
 
 
 const QuestionsList = ({ questions, setQuestions }) => {
     const [sucessOpen, setSucessOpen] = useState(false);
     const [problemOpen, setProblemOpen] = useState(false);
+    const [selectedPage, setSelectedPage] = useState(0)
 
+    const getFilteredQuestionsByPage = (pageNumber) => {
+        const filteredQuestions = questions.slice(pageNumber * 10, (pageNumber * 10) + 10);
+        return filteredQuestions;
+    }
+
+    const renderPages = () => {
+        const pageCount = questions.length / 10;
+
+        return (
+            <List horizontal>
+                {
+                    _.range(pageCount).map(num => {
+                         return <List.Item>
+                            <Button onClick={() => setSelectedPage(num)}>{num}</Button>
+                        </List.Item>
+                    })
+                }
+            </List>
+        )
+    }
+    
 
     const deleteAction = (id) => {
         serverAccess.delete('/api/questions/' + id)
@@ -48,7 +71,7 @@ const QuestionsList = ({ questions, setQuestions }) => {
 
                 <TableBody>
                     {
-                        questions.map(question =>
+                        getFilteredQuestionsByPage(selectedPage).map(question =>
                             <QuestionListItem item={question} key={question._id} deleteAction={deleteAction} />
                         )
                     }
@@ -72,6 +95,11 @@ const QuestionsList = ({ questions, setQuestions }) => {
                     </Table.Row>
                 </Table.Footer>
             </Table>
+
+            {
+                renderPages()
+            }
+
             <SuccessModal text="You successfully deleted a question" open={sucessOpen} setOpen={setSucessOpen} />
             <ProblemModal text="Something went wrong when trying to delete the question, question might not be deleted" open={problemOpen} setOpen={setProblemOpen} />
         </>

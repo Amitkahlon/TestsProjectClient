@@ -4,6 +4,7 @@ import GenerateTestReportForm from '../../components/reports/GenerateTestReportF
 import TestReport from '../../components/reports/TestReport';
 import testReportFormReducer from "../../reducers/testReportFormReducer";
 import serverAccess from "../../api/serverAccess";
+import ErrorMessage from "../../components/controls/ErrorMessage";
 
 var today = new Date();
 var dd = String(today.getDate()).padStart(2, '0');
@@ -44,6 +45,7 @@ const TestReportsPage = () => {
     const [formState, formDispatch] = useReducer(testReportFormReducer, initialForm);
     const [showReport, setShowReport] = useState(false);
     const [reportData, setReportData] = useState(initialData);
+    const [errorArr, setErrorArr] = useState([])
 
     const submitForm = () => {
         if (formState.anyDate) {
@@ -58,8 +60,9 @@ const TestReportsPage = () => {
                             console.log(res.data.report);
                             setReportData(res.data.report);
                             setShowReport(true);
+                            setErrorArr([]);
                         } else {
-                            console.log(res.data.message);
+                            setErrorArr([res.data.message]);
                         }
                     })
                     .catch(err => console.log(err))
@@ -79,17 +82,19 @@ const TestReportsPage = () => {
                 })
                     .then(res => {
                         if (res.data.report) {
-                            console.log(res.data.report)
+                            console.log(res.data.report);
                             setReportData(res.data.report);
                             setShowReport(true);
+                            setErrorArr([]);
                         } else {
-                            console.log(res.data.message)
+                            setErrorArr([res.data.message]);
                         }
                     })
                     .catch(err => console.log(err))
             }
             else {
                 console.error("form dates and testid cannot be undifined");
+                setErrorArr([{ message: "form dates and testid cannot be undifined" }])
             }
         }
     }
@@ -112,6 +117,9 @@ const TestReportsPage = () => {
     return (
         <Container >
             <GenerateTestReportForm form={formState} formDispatch={formDispatch} submitForm={submitForm} setShowReport={() => setShowReport(false)} />
+            {
+                errorArr.length > 0 ? <ErrorMessage errors={errorArr} /> : null
+            }
             <Button onClick={() => setShowReport(!showReport)}>
                 <Icon name={(showReport ? 'plus' : 'minus')} />
                 Show Report

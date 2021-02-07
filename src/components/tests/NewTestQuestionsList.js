@@ -83,7 +83,7 @@ const NewTestQuestionsList = ({ questions, handleSelectQuestion, editQts=[] }) =
 
     let tableContent = filteredQuestions.length > 0 ? <>
         {filteredQuestions.map((question) => (
-            <Table.Row style={{backgroundColor: selectedQuestions.find(q => q === question._id)? 'lightgreen':''}}>
+            <Table.Row key={question._id} style={{backgroundColor: selectedQuestions.find(q => q === question._id)? 'lightgreen':''}}>
                 <Table.Cell textAlign='center'>
                     <Checkbox checked={selectedQuestions.length > 0 && selectedQuestions.find(q => q === question._id)} onChange={() => handleCheckQuestion(question._id)} />
                 </Table.Cell>
