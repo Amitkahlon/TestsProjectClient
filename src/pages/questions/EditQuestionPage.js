@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import _ from 'lodash';
 import ProblemModal from '../../components/controls/ProblemModal';
 import SuccessModal from '../../components/controls/SuccessModal';
+import ErrorMessage from '../../components/controls/ErrorMessage';
 
 
 const EditQuestionPage = () => {
@@ -57,11 +58,18 @@ const EditQuestionPage = () => {
     return (
         <Container>
             <Header textAlign="center">Edit Question Page</Header>
+            {
+                errorText.length > 0 ?
+                    <ErrorMessage errors={errorText} /> : null
+            }
+
 
             {
                 !_.isEmpty(question) ? (
                     <QuestionForm initialState={question} submitText="Edit Question" onSubmit={(question) => {
-                        serverAccess.put("api/questions/" + question._id, { question })
+                        const id = question._id;
+                        delete question._id;
+                        serverAccess.put("api/questions/" + id, { question })
                             .then(res => {
                                 if (res.data.question) {
                                     setSucessOpen(true);
@@ -80,8 +88,6 @@ const EditQuestionPage = () => {
                 ) : (
                         <p>Loading...</p>
                     )}
-
-            <p style={{ marginTop: "30px", color: "red", fontSize: "20px" }}>{errorText}</p>
 
             <SuccessModal text="You successfully edit the question" open={sucessOpen} setOpen={setSucessOpen} okRedirectPath="/questions"/>
             <ProblemModal text="Something went wrong when trying to delete the question, question might not be editted" open={problemOpen} setOpen={setProblemOpen} />

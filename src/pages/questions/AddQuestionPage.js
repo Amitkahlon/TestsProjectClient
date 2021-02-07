@@ -32,8 +32,6 @@ const AddQuestionPage = () => {
                         }
                         else {
                             setProblemOpen(true);
-                            console.log(res.data.message);
-
                             setError(res.data.message);
 
                         }
