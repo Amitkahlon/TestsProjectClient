@@ -7,7 +7,6 @@ import testReducer from '../../reducers/addTestReducer';
 
 const EditTestPage = () => {
     const [questions, setQuestions] = useState([])
-    const [selectedLanguage, setSelectedLanguage] = useState('')
     const location = useLocation()
     const history = useHistory()
     const initialState = {
@@ -20,14 +19,10 @@ const EditTestPage = () => {
         failMessage: location.state.failMessage,
         language: location.state.language
     }
-
     const [test, dispatch] = useReducer(testReducer, initialState)
     const [errors, setErrors] = useState(null)
     const [selectedQuestions, setSelectedQuestions] = useState(test.questions);
 
-    useEffect(() => {
-        setSelectedLanguage(location.state.language);
-    }, [])
     useEffect(() => {
         serverAccess.get('/api/questions')
             .then(({ data }) => setQuestions(data.questions))
@@ -37,11 +32,6 @@ const EditTestPage = () => {
     useEffect(() => {
         dispatch({ type: 'SET_QUESTIONS', payload: selectedQuestions })
     }, [selectedQuestions])
-
-    useEffect(() => {
-        dispatch({ type: 'SET_LANGUAGE', payload: selectedLanguage })
-    }, [selectedLanguage])
-
 
     const handleSelectQuestion = (qts) => {
         setSelectedQuestions(qts)
@@ -114,9 +104,9 @@ const EditTestPage = () => {
                                                 selection
                                                 placeholder='Language'
                                                 options={langOptions}
-                                                value={selectedLanguage}
+                                                value={test.language}
                                                 onChange={(e, { value }) => {
-                                                    setSelectedLanguage(value)
+                                                    dispatch({ type: 'SET_QUESTIONS', payload: value })
                                                 }}
                                                 style={{ width: '30%' }}
                                             />

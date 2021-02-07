@@ -8,22 +8,24 @@ const NewTestQuestionsList = ({ questions, handleSelectQuestion, editQts=[] }) =
     const [search, setSearch] = useState('')
     const [selectedQuestions, setSelectedQuestions] = useState(editQts)
     const [selectedSearchOption, setSelectedSearchOption] = useState('')
-    const [selectAll, setSelectAll] = useState(false);
+    const [selectAll, setSelectAll] = useState(editQts.length === questions.length);
 
     useEffect(() => {
         setFilteredQuestions(questions)
     }, [questions])
 
-    useEffect(() => {
-        if(selectAll){
+    const handleSelectAll = () => {
+        if(!selectAll){
             let qts = []
             questions.forEach(q => qts.push(q._id))
             setSelectedQuestions(qts)
             handleSelectQuestion(selectedQuestions)
+            setSelectAll(true)
         }else{
             setSelectedQuestions([])
+            setSelectAll(false)
         }
-    }, [selectAll, questions])
+    }
 
     useEffect(() => {
         handleSelectQuestion(selectedQuestions)
@@ -134,7 +136,7 @@ const NewTestQuestionsList = ({ questions, handleSelectQuestion, editQts=[] }) =
                 <Checkbox 
                     label='Select All'
                     checked={selectAll}
-                    onChange={() => setSelectAll(!selectAll)}
+                    onChange={handleSelectAll}
                 />
             </div>
             <Table celled>
