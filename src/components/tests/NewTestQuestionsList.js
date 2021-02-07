@@ -23,7 +23,7 @@ const NewTestQuestionsList = ({ questions, handleSelectQuestion, editQts=[] }) =
         }else{
             setSelectedQuestions([])
         }
-    }, [selectAll, questions, selectedQuestions, handleSelectQuestion])
+    }, [selectAll, questions])
 
     useEffect(() => {
         handleSelectQuestion(selectedQuestions)
