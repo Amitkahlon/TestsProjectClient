@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Container, Header } from 'semantic-ui-react';
-import { Link, useLocation, useHistory } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import Question from '../../components/questions/Question';
 
 const QuestionPage = (props) => {
