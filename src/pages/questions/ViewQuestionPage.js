@@ -31,7 +31,7 @@ const QuestionPage = (props) => {
     return (
         <Container>
             <Header>View Question</Header>
-            <Question question={question} onChange={handleSingleSelect} selectedAnswer={selectedAnswer} />
+            <Question question={question} onChange={handleSingleSelect} selectedAnswer={selectedAnswer} test={{ language: "en" }} />
         </Container>
     )
 }

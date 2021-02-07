@@ -1,10 +1,11 @@
 import React from 'react'
-import { Card, Checkbox, Form } from 'semantic-ui-react'
-
+import { Card, Checkbox, Form } from 'semantic-ui-react';
+import '../../styles/UserTestPage.css';
 const Question = ({ question, onChange, selectedAnswer, test }) => {
     return (
         <Card fluid>
-            <Card.Content textAlign={test.language === 'he' ? 'right' : 'left'}>
+            {/* <Card.Content textAlign={lang === 'he' ? 'right' : 'left'}> */}
+            <Card.Content textAlign="left">
                 <Card.Header>{question.title}</Card.Header>
                 <Card.Description>
                     {question.subTitle}
@@ -20,7 +21,7 @@ const Question = ({ question, onChange, selectedAnswer, test }) => {
                                     value={a}
                                     checked={selectedAnswer.includes(a)}
                                     onChange={onChange}
-                                    style={{margin: '3px'}}
+                                    style={{ margin: '3px' }}
                                 />
                             </Form.Field>
                         )}

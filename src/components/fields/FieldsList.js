@@ -34,7 +34,7 @@ const FieldsList = ({ fields, setFields }) => {
     let tableContent = (!fields.message || fields.length > 0) ?
         <>
             {fields.map(field => (
-                <Table.Row>
+                <Table.Row key={field._id}>
                     <Table.Cell>{field.title}</Table.Cell>
                     <Table.Cell collapsing>
                         <Modal
