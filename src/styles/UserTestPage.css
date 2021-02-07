@@ -24,10 +24,10 @@
 }
 
 .hebrew{
-    justify-content: right;
+    justify-content: flex-end;
 }
 
 .english{
-    justify-content: left;
+    justify-content: flex-end;
     flex-direction: row-reverse;
 }

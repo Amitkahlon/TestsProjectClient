@@ -21,7 +21,7 @@ const QuestionListItem = ({ item, deleteAction }) => {
       <Table.Cell>{item.LastEdited}</Table.Cell>
 
       <Table.Cell>
-        <Link target="_blank" to={{
+        <Link to={{
           pathname: "/questions/view",
           state: {
             question: item
