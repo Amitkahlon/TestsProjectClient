@@ -4,8 +4,7 @@ import '../../styles/UserTestPage.css';
 const Question = ({ question, onChange, selectedAnswer, test }) => {
     return (
         <Card fluid>
-            {/* <Card.Content textAlign={lang === 'he' ? 'right' : 'left'}> */}
-            <Card.Content textAlign="left">
+            <Card.Content textAlign={test.language === 'he' ? 'right' : 'left'}>
                 <Card.Header>{question.title}</Card.Header>
                 <Card.Description>
                     {question.subTitle}
