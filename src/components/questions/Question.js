@@ -1,25 +1,26 @@
 import React from 'react'
 import { Card, Checkbox, Form } from 'semantic-ui-react'
 
-const Question = ({ question, onChange, selectedAnswer }) => {
+const Question = ({ question, onChange, selectedAnswer, test }) => {
     return (
         <Card fluid>
-            <Card.Content>
+            <Card.Content textAlign={test.language === 'he' ? 'right' : 'left'}>
                 <Card.Header>{question.title}</Card.Header>
                 <Card.Description>
                     {question.subTitle}
                 </Card.Description>
                 <div className={`questions ${question.answersDisplay}`}>
                     <Form>
-                        {question.answers.map((a, i) =>
-                            <Form.Field key={i}>
+                        {question.answers.map(a =>
+                            <Form.Field className={test.language === 'he' ? 'question hebrew' : 'question english'}>
+                                <label>{a}</label>
                                 <Checkbox
                                     radio={question.questionType === 'SingleChoiceQuestion'}
                                     name="answersGroup"
-                                    label={a}
                                     value={a}
                                     checked={selectedAnswer.includes(a)}
                                     onChange={onChange}
+                                    style={{margin: '3px'}}
                                 />
                             </Form.Field>
                         )}

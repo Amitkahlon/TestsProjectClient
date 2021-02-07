@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Card, Checkbox, Form } from 'semantic-ui-react';
 import { ContextValues } from '../../context/AppContext';
 import '../../styles/UserTestPage.css'
 import Question from '../questions/Question';
@@ -34,7 +33,7 @@ const ExamQuestion = ({ question, setAnswer, questionNumber }) => {
     }
 
     return (
-        <Question question={question} onChange={handleSingleSelect} selectedAnswer={selectedAnswer} />
+        <Question question={question} onChange={handleSingleSelect} selectedAnswer={selectedAnswer} test={user.test}/>
     );
 }
 
