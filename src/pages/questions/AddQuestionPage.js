@@ -20,8 +20,8 @@ const AddQuestionPage = () => {
             <h1 style={styles.header}>Add Question</h1>
 
             {
-                errorText.length > 0 ? 
-                <ErrorMessage errors={errorText} /> : null
+                errorText.length > 0 ?
+                    <ErrorMessage errors={errorText} /> : null
             }
 
             <QuestionForm initialState={defaultQuestion} submitText="Submit Question" onSubmit={(question) => {
@@ -32,12 +32,14 @@ const AddQuestionPage = () => {
                         }
                         else {
                             setProblemOpen(true);
-                            console.error(res.data.message);
+                            console.log(res.data.message);
+
                             setError(res.data.message);
+
                         }
                     })
                     .catch(err => {
-                        setProblemOpen(true);
+                        // setProblemOpen(true);
                         console.error(err);
                     })
             }} />
