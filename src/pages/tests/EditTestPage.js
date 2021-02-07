@@ -17,11 +17,17 @@ const EditTestPage = () => {
         showCorrectAnswers: location.state.showCorrectAnswers,
         questions: location.state.questions.map(q => q._id),
         passMessage: location.state.passMessage,
-        failMessage: location.state.failMessage
+        failMessage: location.state.failMessage,
+        language: location.state.language
     }
+
     const [test, dispatch] = useReducer(testReducer, initialState)
     const [errors, setErrors] = useState(null)
-    const [selectedQuestions, setSelectedQuestions] = useState(test.questions)
+    const [selectedQuestions, setSelectedQuestions] = useState(test.questions);
+
+    useEffect(() => {
+        setSelectedLanguage(location.state.language);
+    }, [])
     useEffect(() => {
         serverAccess.get('/api/questions')
             .then(({ data }) => setQuestions(data.questions))

@@ -8,7 +8,7 @@ const NewTestQuestionsList = ({ questions, handleSelectQuestion, editQts=[] }) =
     const [search, setSearch] = useState('')
     const [selectedQuestions, setSelectedQuestions] = useState(editQts)
     const [selectedSearchOption, setSelectedSearchOption] = useState('')
-    const [selectAll, setSelectAll] = useState(false)
+    const [selectAll, setSelectAll] = useState(false);
 
     useEffect(() => {
         setFilteredQuestions(questions)

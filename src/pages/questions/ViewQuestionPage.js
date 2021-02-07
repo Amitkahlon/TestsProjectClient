@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Container, Header } from 'semantic-ui-react';
-import { useLocation } from "react-router-dom";
+import { Button, Container, Header } from 'semantic-ui-react';
+import { Link, useLocation, useHistory } from "react-router-dom";
 import Question from '../../components/questions/Question';
 
 const QuestionPage = (props) => {
     const [selectedAnswer, setSelectedAnswer] = useState([]);
+    const history = useHistory();
 
     const handleSingleSelect = (e, { value }) => {
         if (question.questionType === 'SingleChoiceQuestion') {
@@ -32,6 +33,9 @@ const QuestionPage = (props) => {
         <Container>
             <Header>View Question</Header>
             <Question question={question} onChange={handleSingleSelect} selectedAnswer={selectedAnswer} test={{ language: "en" }} />
+            <Button onClick={() => {
+                history.goBack();
+            }}>Go Back</Button>
         </Container>
     )
 }
